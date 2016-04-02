@@ -48,9 +48,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import java.io.File;
+import com.google.devrel.samples.helloendpoints.FileChooser;
+
 import com.google.devrel.samples.helloendpoints.R.id;
 
 import static com.google.devrel.samples.helloendpoints.BuildConfig.DEBUG;
+
+import com.google.devrel.samples.helloendpoints.CloudStorage;
 
 /**
  * Sample Android application for the Hello World tutorial for Google Cloud Endpoints. The sample
@@ -205,13 +210,38 @@ public class MainActivity extends Activity {
               }
             };
 
-    getAndDisplayGreeting.execute((Void)null);
+    getAndDisplayGreeting.execute((Void) null);
   }
 
-  /**
-   * This method is invoked when the "Multiply Greeting" button is clicked. See activity_main.xml
-   * for the dynamic reference to this method.
-   */
+  public void onClickFileChooser(View view)
+  {
+    FileChooser filechooser = new FileChooser(MainActivity.this);
+    filechooser.setFileListener(new FileChooser.FileSelectedListener() {
+      @Override
+      public void fileSelected(final File file) {
+        // do something with the file
+        HelloGreeting greeting = new HelloGreeting();
+        greeting.setMessage(file.getAbsolutePath());
+        displayGreetings(greeting);
+        //upload to cloud storage
+        try {
+          CloudStorage.uploadFile("thomasmhardy.appspot.com", file.getAbsolutePath(), getApplicationContext());
+        } catch(Exception e)
+        {
+          Log.e(LOG_TAG, "Error uploading file: " + e.getMessage());
+        }
+
+      }
+
+    });
+    filechooser.showDialog();
+  }
+
+            /**
+             * This method is invoked when the "Multiply Greeting" button is clicked. See activity_main.xml
+             * for the dynamic reference to this method.
+             */
+
   public void onClickSendGreetings(View view) {
     View rootView = view.getRootView();
 

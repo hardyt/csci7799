@@ -140,6 +140,7 @@
           android:layout_height="wrap_content"
           android:text="Click To Upload File"
           android:id="@+id/uploadButton"
+          android:onClick="onClickFileChooser"
           />
 
       <TextView
