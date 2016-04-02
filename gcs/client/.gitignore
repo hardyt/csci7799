@@ -1,0 +1,12 @@
+HelloEndpointsProject/.idea/**
+HelloEndpointsProject/.gradle/**
+HelloEndpointsProject/local.properties
+HelloEndpointsProject/HelloEndpoints/build/**
+HelloEndpointsProject/HelloEndpoints/src/main/gen/**
+*.iml
+pom.xml
+out/**
+/appengine-gcs-client-master
+/solutions-orchestrator-android-sampleapp-smashpix-master.zip
+/solutions-orchestrator-android-sampleapp-smashpix-master
+appengine-endpoints-helloendpoints-python-master
