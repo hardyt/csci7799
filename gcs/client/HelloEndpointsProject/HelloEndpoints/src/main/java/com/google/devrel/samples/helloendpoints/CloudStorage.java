@@ -38,7 +38,6 @@ public class CloudStorage {
 
     private static final String LOG_TAG = "MainActivity";
 
-    private static Properties properties;
     private static Storage storage;
 
     private static final String PROJECT_ID_PROPERTY = "thomasmhardy";
@@ -60,26 +59,41 @@ public class CloudStorage {
 
         Storage storage = getStorage(context);
 
+        Log.e(LOG_TAG, "wtf-up2");
+
         StorageObject object = new StorageObject();
         object.setBucket(bucketName);
 
         File file = new File(filePath);
+        Log.e(LOG_TAG, "wtf-up3: " + file.exists() + file.length() + filePath);
 
         InputStream stream = new FileInputStream(file);
         try {
+            Log.e(LOG_TAG, "wtf-up4");
             String contentType = URLConnection
-                    .guessContentTypeFromStream(stream);
+                    //.guessContentTypeFromStream(stream);
+                    .guessContentTypeFromName(file.getName());
+            if(contentType==null) contentType = "application/octet-stream";
+            Log.e(LOG_TAG, "wtf-up5: " + contentType);
             InputStreamContent content = new InputStreamContent(contentType,
                     stream);
-
+            content.setLength(file.length());
+            Log.e(LOG_TAG, "wtf-up6: " + content.getLength() + bucketName);
             Storage.Objects.Insert insert = storage.objects().insert(
                     bucketName, null, content);
+            Log.e(LOG_TAG, "wtf-up7: " + insert.getLastStatusMessage()+ insert.isEmpty());
             insert.setName(file.getName());
-
+            Log.e(LOG_TAG, "wtf-up8: " + insert.getLastStatusMessage()+ insert.isEmpty());
             insert.execute();
+            Log.e(LOG_TAG, "wtf-up9: " + insert.getLastStatusMessage()+ insert.isEmpty());
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error gcs: " + e.getMessage());
         } finally {
+            Log.e(LOG_TAG, "wtf-up10: ");
             stream.close();
+            Log.e(LOG_TAG, "wtf-up11");
         }
+        Log.e(LOG_TAG, "wtf-up12");
     }
 
     public static void downloadFile(String bucketName, String fileName, String destinationDirectory, Context context) throws Exception {
@@ -129,8 +143,7 @@ public class CloudStorage {
         Bucket bucket = new Bucket();
         bucket.setName(bucketName);
 
-        storage.buckets().insert(
-                getProperties().getProperty(PROJECT_ID_PROPERTY), bucket).execute();
+        storage.buckets().insert(PROJECT_ID_PROPERTY, bucket).execute();
     }
 
     /**
@@ -182,7 +195,7 @@ public class CloudStorage {
 
         List<String> list = new ArrayList<String>();
 
-        List<Bucket> buckets = storage.buckets().list(getProperties().getProperty(PROJECT_ID_PROPERTY)).execute().getItems();
+        List<Bucket> buckets = storage.buckets().list(PROJECT_ID_PROPERTY).execute().getItems();
         if (buckets != null) {
             for (Bucket b : buckets) {
                 list.add(b.getName());
@@ -190,25 +203,6 @@ public class CloudStorage {
         }
 
         return list;
-    }
-
-    private static Properties getProperties() throws Exception {
-
-        if (properties == null) {
-            properties = new Properties();
-            InputStream stream = CloudStorage.class
-                    .getResourceAsStream("/cloudstorage.properties");
-            try {
-                properties.load(stream);
-            } catch (IOException e) {
-                throw new RuntimeException(
-                        "cloudstorage.properties must be present in classpath",
-                        e);
-            } finally {
-                stream.close();
-            }
-        }
-        return properties;
     }
 
     private static Storage getStorage(Context context) throws Exception {
@@ -226,21 +220,23 @@ public class CloudStorage {
             Credential credential = new GoogleCredential.Builder()
                     .setTransport(httpTransport)
                     .setJsonFactory(jsonFactory)
-                    .setServiceAccountId(
-                            getProperties().getProperty(ACCOUNT_ID_PROPERTY))
+                    .setServiceAccountId(ACCOUNT_ID_PROPERTY)
 					/*
           .setServiceAccountPrivateKeyFromP12File(
 							new File(getProperties().getProperty(
 									PRIVATE_KEY_PATH_PROPERTY)))
           */
                     .setServiceAccountPrivateKeyFromP12File(getTempPkc12File(context))
+                    //.setServiceAccountPrivateKeyFromP12File(
+                    //        new File("/src/main/assets/thomasmhardy-ebc515c808a6.p12"))
                     .setServiceAccountScopes(scopes).build();
 
+            Log.e(LOG_TAG, "wtf-store3");
             storage = new Storage.Builder(httpTransport, jsonFactory,
-                    credential).setApplicationName(
-                    getProperties().getProperty(APPLICATION_NAME_PROPERTY))
+                    credential).setApplicationName(APPLICATION_NAME_PROPERTY)
                     .build();
         }
+
 
         return storage;
     }
@@ -250,7 +246,7 @@ public class CloudStorage {
 
         Log.e(LOG_TAG, "wtf-12");
 
-        InputStream pkc12Stream = context.getAssets().open("thomasmhardy-ebc515c808a6.p12");
+        InputStream pkc12Stream = context.getAssets().open(PRIVATE_KEY_PATH_PROPERTY);
         File tempPkc12File = File.createTempFile("temp_pkc12_file", "p12");
         OutputStream tempFileStream = new FileOutputStream(tempPkc12File);
 

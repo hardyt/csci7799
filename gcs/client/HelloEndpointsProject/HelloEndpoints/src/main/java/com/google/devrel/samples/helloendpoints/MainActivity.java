@@ -45,6 +45,7 @@ import com.google.common.base.Strings;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -223,9 +224,22 @@ public class MainActivity extends Activity {
         HelloGreeting greeting = new HelloGreeting();
         greeting.setMessage(file.getAbsolutePath());
         displayGreetings(greeting);
+        //list buckets
+        try {
+          List<String> buckets = CloudStorage.listBuckets(getApplicationContext());
+          for (Iterator<String> i = buckets.iterator(); i.hasNext();) {
+            String item = i.next();
+            Log.e(LOG_TAG, item);
+          }
+        } catch(Exception e)
+        {
+          Log.e(LOG_TAG, "Error getting buckets: " + e.getMessage());
+        }
+
         //upload to cloud storage
         try {
-          CloudStorage.uploadFile("thomasmhardy.appspot.com", file.getAbsolutePath(), getApplicationContext());
+          CloudStorage.uploadFile("simple-cloud-storage-51fcfacb-f44c-4fb7-a120-197838f3a3a3",
+                  file.getAbsolutePath(), getApplicationContext());
         } catch(Exception e)
         {
           Log.e(LOG_TAG, "Error uploading file: " + e.getMessage());
