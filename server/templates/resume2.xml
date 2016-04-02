@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- <Resume> -->
+<!-- Removed namespace references as this seems to be beyond the scope of the assignment
+and they break functionality. -->
+<Resume xml:lang="EN" xmlns="http://ns.hr-xml.org/2007-04-15" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ns.hr-xml.org/2007-04-15
+Resume.xsd">
+	<ResumeId>
+		<IdValue>302-76-4239</IdValue> 
+	</ResumeId> 
+	<StructuredXMLResume> 
+		<ContactInfo> 
+			<PersonName> 
+				<FormattedName>Thomas M. Hardy</FormattedName> 
+			</PersonName> 
+			<ContactMethod> 
+				<Telephone> 
+					<FormattedNumber>+1 719 526 7684</FormattedNumber>
+				</Telephone> 
+				<Fax> 
+					<FormattedNumber>+1 719 524 4033</FormattedNumber> 
+				</Fax> 
+				<InternetEmailAddress>thomas.m.hardy.mil@mail.mil</InternetEmailAddress> 
+				<InternetWebAddress></InternetWebAddress> 
+				<PostalAddress>
+					<CountryCode>US</CountryCode> 
+					<PostalCode>80913</PostalCode>
+					<Region>CO</Region> 
+					<Municipality>Colorado Springs</Municipality> 
+					<DeliveryAddress>
+						<AddressLine>1650 Cochrane Circle</AddressLine>
+						<StreetName/>
+						<BuildingNumber/>
+						<Unit/>
+						<PostOfficeBox/>
+					</DeliveryAddress>
+					<Recipient> 
+						<OrganizationName>Information Management Division</OrganizationName>
+					</Recipient> 
+				</PostalAddress> 
+			</ContactMethod> 
+		</ContactInfo> 
+
+		<ExecutiveSummary>As an active duty Army officer, I have a breadth of experience and skills. My education includes a masters of science in information systms, a masters of business in technology management, and a bachelors of science in electrical engineering. I also have extensively studied health information technology, health services, and acute care hospital management.</ExecutiveSummary> 
+
+		<Objective>To use my experience and skills to develop defense health policy and facilitate international defense cooperation.</Objective> 
+
+		<EmploymentHistory> 
+			<EmployerOrg> 
+				<EmployerOrgName>US Army</EmployerOrgName> 
+				<EmployerContactInfo> 
+					<LocationSummary> 
+						<Municipality>Colorado Springs</Municipality> 
+						<Region>CO</Region> 
+					</LocationSummary> 
+				</EmployerContactInfo> 
+				<PositionHistory positionType="full-time"> 
+					<Title>Chief Information Officer</Title> 
+					<OrgName> 
+						<OrganizationName>Ft. Carson MEDDAC</OrganizationName> 
+					</OrgName> 
+					<Description>Two deployments to Operation Iraqi Freedom and one 
+					deployment to Operation Enduring Freedom. Directly responsible for 
+					100 personnel as Company Commander, HHC, 30th Medical Command. 
+					Responsible for $25 million worth of equipment and served in the 
+					Company Commander’s absence in charge of 180 soldiers as Executive 
+					Officer for Headquarters, 1-327th Infantry Regiment. Directly 
+					responsible for 40 medical personnel as Medical Platoon Leader for 
+					1-327th Infantry Regiment.</Description> 
+					<StartDate> 
+						<YearMonth>2012-08</YearMonth> 
+					</StartDate> 
+					<EndDate> 
+						<YearMonth>Current</YearMonth> 
+					</EndDate> 
+				</PositionHistory> 
+			</EmployerOrg> 
+			<EmployerOrg> 
+				<EmployerOrgName>US Army</EmployerOrgName> 
+				<EmployerContactInfo> 
+					<LocationSummary> 
+						<Municipality>Bagram AB</Municipality> 
+						<Region>AF</Region> 
+					</LocationSummary> 
+				</EmployerContactInfo> 
+				<PositionHistory positionType="full-time"> 
+					<Title>Company Commander</Title> 
+					<OrgName> 
+						<OrganizationName>30th Medical Command</OrganizationName> 
+					</OrgName> 
+					<Description></Description> 
+					<StartDate> 
+						<YearMonth>2009-04</YearMonth> 
+					</StartDate> 
+					<EndDate> 
+						<YearMonth>2010-07</YearMonth> 
+					</EndDate> 
+				</PositionHistory> 
+			</EmployerOrg>
+			<EmployerOrg> 
+				<EmployerOrgName>US Army</EmployerOrgName> 
+				<EmployerContactInfo> 
+					<LocationSummary> 
+						<Municipality>Heidelberg</Municipality> 
+						<Region>DE</Region> 
+					</LocationSummary> 
+				</EmployerContactInfo> 
+				<PositionHistory positionType="full-time"> 
+					<Title>Information Assurance Manager</Title> 
+					<OrgName> 
+						<OrganizationName>30th Medical Brigade</OrganizationName> 
+					</OrgName> 
+					<Description></Description> 
+					<StartDate> 
+						<YearMonth>2007-05</YearMonth> 
+					</StartDate> 
+					<EndDate> 
+						<YearMonth>2009-03</YearMonth> 
+					</EndDate> 
+				</PositionHistory> 
+			</EmployerOrg> 
+			<EmployerOrg> 
+				<EmployerOrgName>US Army</EmployerOrgName> 
+				<EmployerContactInfo> 
+					<LocationSummary> 
+						<Municipality>Fort Campbell</Municipality> 
+						<Region>KY</Region> 
+					</LocationSummary> 
+				</EmployerContactInfo> 
+				<PositionHistory positionType="full-time"> 
+					<Title>Brigade Medical Planner</Title> 
+					<OrgName> 
+						<OrganizationName>1st Brigade, 101st Airborne Division (Air Assault)</OrganizationName> 
+					</OrgName> 
+					<Description></Description> 
+					<StartDate> 
+						<YearMonth>2006-11</YearMonth> 
+					</StartDate> 
+					<EndDate> 
+						<YearMonth>2007-02</YearMonth> 
+					</EndDate> 
+				</PositionHistory> 
+			</EmployerOrg>
+			<EmployerOrg> 
+				<EmployerOrgName>US Army</EmployerOrgName> 
+				<EmployerContactInfo> 
+					<LocationSummary> 
+						<Municipality>FOB McHenry</Municipality> 
+						<Region>IZ</Region> 
+					</LocationSummary> 
+				</EmployerContactInfo> 
+				<PositionHistory positionType="full-time"> 
+					<Title>Executive Officer</Title> 
+					<OrgName> 
+						<OrganizationName>HHC/1-327IN Regt, 101st Airborne Division (Air Assault)</OrganizationName> 
+					</OrgName> 
+					<Description></Description> 
+					<StartDate> 
+						<YearMonth>2005-09</YearMonth> 
+					</StartDate> 
+					<EndDate> 
+						<YearMonth>2006-10</YearMonth> 
+					</EndDate> 
+				</PositionHistory> 
+			</EmployerOrg>
+			<EmployerOrg> 
+				<EmployerOrgName>US Army</EmployerOrgName> 
+				<EmployerContactInfo> 
+					<LocationSummary> 
+						<Municipality>Fort Campbell</Municipality> 
+						<Region>KY</Region> 
+					</LocationSummary> 
+				</EmployerContactInfo> 
+				<PositionHistory positionType="full-time"> 
+					<Title>Medical Platoon Leader</Title> 
+					<OrgName> 
+						<OrganizationName>HHC/1-327IN Regt, 101st Airborne Division (Air Assault)</OrganizationName> 
+					</OrgName> 
+					<Description></Description> 
+					<StartDate> 
+						<YearMonth>2003-09</YearMonth> 
+					</StartDate> 
+					<EndDate> 
+						<YearMonth>2005-08</YearMonth> 
+					</EndDate> 
+				</PositionHistory> 
+			</EmployerOrg>       
+			<EmployerOrg> 
+				<EmployerOrgName>DARPA</EmployerOrgName> 
+				<EmployerContactInfo> 
+					<LocationSummary> 
+						<Municipality>Fort Monmouth</Municipality> 
+						<Region>NJ</Region> 
+					</LocationSummary> 
+				</EmployerContactInfo> 
+				<PositionHistory positionType="internship"> 
+					<Title>Engineer Intern</Title> 
+					<OrgName> 
+						<OrganizationName>Future Combat Systems</OrganizationName> 
+					</OrgName> 
+					<Description>Interned as a computer engineering designing, implementing, and
+					testing the Command and Control (C2) module of the Future Combat Systems platform.
+					</Description> 
+					<StartDate> 
+						<YearMonth>2002-08</YearMonth> 
+					</StartDate>
+					<EndDate> 
+						<YearMonth>2002-09</YearMonth> 
+					</EndDate> 
+				</PositionHistory> 
+			</EmployerOrg>
+			<EmployerOrg> 
+				<EmployerOrgName>Triad Consultants</EmployerOrgName> 
+				<EmployerContactInfo> 
+					<LocationSummary> 
+						<Municipality>Youngstown</Municipality> 
+						<Region>OH</Region> 
+					</LocationSummary> 
+				</EmployerContactInfo> 
+				<PositionHistory positionType="part-time"> 
+					<Title>Draftsman</Title> 
+					<OrgName> 
+						<OrganizationName>Triad Consultants</OrganizationName> 
+					</OrgName> 
+					<Description>Part time work as a draftsman and an environmental engineering technician.
+					</Description> 
+					<StartDate> 
+						<YearMonth>1999-05</YearMonth> 
+					</StartDate>
+					<EndDate> 
+						<YearMonth>2001-02</YearMonth> 
+					</EndDate> 
+				</PositionHistory> 
+			</EmployerOrg>
+		</EmploymentHistory> 
+
+		<EducationHistory> 
+<SchoolOrInstitution schoolType="university"> 
+				<School> 
+					<InternetDomainName>www.gwu.edu</InternetDomainName> 
+					<SchoolName>George Washington University</SchoolName> 
+				</School> 
+				<Degree degreeType="masters"> 
+					<DegreeName>MS</DegreeName> 
+					<DegreeDate> 
+						<YearMonth>2012-07</YearMonth> 
+					</DegreeDate> 
+					<DegreeMajor> 
+						<Name>Information Systems Technology</Name> 
+					</DegreeMajor>  
+				</Degree> 
+			</SchoolOrInstitution> 
+			<SchoolOrInstitution schoolType="university"> 
+				<School> 
+					<InternetDomainName>www.phoenix.edu</InternetDomainName> 
+					<SchoolName>University of Phoenix</SchoolName> 
+				</School> 
+				<Degree degreeType="masters"> 
+					<DegreeName>MBA</DegreeName> 
+					<DegreeDate> 
+						<YearMonth>2006-11</YearMonth> 
+					</DegreeDate> 
+					<DegreeMajor> 
+						<Name>Technology Management</Name> 
+					</DegreeMajor>  
+				</Degree> 
+			</SchoolOrInstitution> 
+			<SchoolOrInstitution schoolType="university"> 
+				<School> 
+					<InternetDomainName>www.osu.edu</InternetDomainName> 
+					<SchoolName>The Ohio State University</SchoolName> 
+				</School> 
+				<Degree degreeType="bachelors"> 
+					<DegreeName>BS</DegreeName> 
+					<DegreeDate> 
+						<YearMonth>2003-06</YearMonth> 
+					</DegreeDate> 
+					<DegreeMajor> 
+						<Name>Electrical and Computer Engineering</Name> 
+					</DegreeMajor>  
+				</Degree> 
+			</SchoolOrInstitution> 
+		</EducationHistory> 
+
+		<LicensesAndCertifications>
+			<LicenseOrCertification> 
+				<Name>Federal Chief Information Officer</Name> 
+				<Id></Id> 
+				<IssuingAuthority>General Services Administration</IssuingAuthority> 
+				<Description>In 2000 the General Services Administration (GSA) and the Chief Information Officer’s Council (CIOC) requested information from graduate schools as to how they might tailor their academic offerings to meet the specific requirements of the federal IT sector and its leaders. As a result, seven prestigious universities including Syracuse, George Mason, George Washington, Carnegie Mellon, LaSalle, the University of Maryland-University College and National Defense University’s IRM College (iCollege) are now proud to be CIO University Partner Universities. This is a unique partnership-the first time the government has directly translated its requirements for its senior information management corps into a roadmap for universities to develop a special curriculum.</Description> 
+				<EffectiveDate> 
+					<ValidFrom> 
+						<AnyDate>2012-07-25</AnyDate> 
+					</ValidFrom> 
+					<ValidTo> 
+						<AnyDate></AnyDate> 
+					</ValidTo> 
+					<FirstIssuedDate>
+						<AnyDate>2012-07-25</AnyDate>
+					</FirstIssuedDate>
+				</EffectiveDate> 
+			</LicenseOrCertification> 
+			<LicenseOrCertification> 
+				<Name>Certified Information Security Manager</Name> 
+				<Id>698132958</Id> 
+				<IssuingAuthority>ISACA</IssuingAuthority> 
+				<Description>The management-focused CISM is a unique certification for individuals who design, build and manage enterprise information security programs.</Description> 
+				<EffectiveDate> 
+					<ValidFrom> 
+						<AnyDate>2013-10-25</AnyDate> 
+					</ValidFrom> 
+					<ValidTo> 
+						<AnyDate>2015-01-01</AnyDate> 
+					</ValidTo> 
+					<FirstIssuedDate>
+						<AnyDate>2007-12-01</AnyDate>
+					</FirstIssuedDate>
+				</EffectiveDate> 
+			</LicenseOrCertification>
+			<LicenseOrCertification> 
+				<Name>Security+</Name> 
+				<Id>98274236462</Id>
+				<IssuingAuthority>CompTIA</IssuingAuthority> 
+				<Description>CompTIA Security+ certification designates knowledgeable professionals in the field of security, one of the fastest-growing fields in IT.</Description> 
+				<EffectiveDate> 
+					<ValidFrom> 
+						<AnyDate>2007-11-15</AnyDate> 
+					</ValidFrom> 
+					<FirstIssuedDate>
+						<AnyDate>2007-11-15</AnyDate>
+					</FirstIssuedDate>
+				</EffectiveDate> 
+			</LicenseOrCertification> 
+			<LicenseOrCertification> 
+				<Name>Fundamentals of Engineering</Name> 
+				<Id>24211</Id>
+				<IssuingAuthority>State of Tennessee</IssuingAuthority> 
+				<Description>The Fundamentals of Engineering (FE) exam is typically the first step in the process leading to the P.E. license. </Description> 
+				<EffectiveDate> 
+					<ValidFrom> 
+						<AnyDate></AnyDate> 
+					</ValidFrom> 
+					<FirstIssuedDate>
+						<AnyDate></AnyDate>
+					</FirstIssuedDate>
+				</EffectiveDate> 
+			</LicenseOrCertification> 			
+		</LicensesAndCertifications> 
+		<MilitaryHistory>
+			<CountryServed>US</CountryServed>
+			<ServiceNumber>
+				<IdValue>123456789</IdValue>
+			</ServiceNumber>
+			<ServiceDetail branch="Army">
+				<UnitOrDivision>AMEDD Center and School</UnitOrDivision>
+				<RankAchieved>
+					<CurrentOrEndRank>Major</CurrentOrEndRank>
+				</RankAchieved>
+				<DatesOfService>
+					<StartDate>
+						<AnyDate>2003-07-16</AnyDate>
+					</StartDate>
+				</DatesOfService>
+				<Campaign>Iraqi Freedom</Campaign>
+				<Campaign>Enduring Freedom</Campaign>
+				<AreaOfExpertise>Successfully led medical command operation centers and developed operational and combat standard operation procedures (SOP). Developed and implemented an information security program, which effectively protected military health information. Led a Combat Medical Platoon in two deployments to Iraq and a Medical Command Headquarters Company in Afghanistan. As both a company executive officer and company commander I successfully led the tactical deployments of my respective units.</AreaOfExpertise>
+					<RecognitionAchieved>BRONZE STAR MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>MERITORIOUS SERVICE MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>ARMY COMMENDATION MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>ARMY ACHIEVEMENT MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>MERITORIOUS UNIT CITATION</RecognitionAchieved>
+					<RecognitionAchieved>NATIONAL DEFENSE SERVICE MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>AFGHANISTAN CAMPAIGN MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>IRAQI CAMPAIGN MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>GLOBAL WAR ON TERRORISM EXPEDITIONARY MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>GLOBAL WAR ON TERRORISM SERVICE MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>ARMY SERVICE MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>OVERSEAS SERVICE MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>NATO MEDAL</RecognitionAchieved>
+					<RecognitionAchieved>AIR ASSAULT BADGE</RecognitionAchieved>
+					<RecognitionAchieved>COMBAT MEDICAL BADGE</RecognitionAchieved>
+					<RecognitionAchieved>EXPERT FIELD MEDICAL BADGE</RecognitionAchieved>
+					<RecognitionAchieved>PARACHUTE BADGE</RecognitionAchieved>
+			</ServiceDetail>
+		</MilitaryHistory> 
+		<Qualifications> 
+			<Competency name="Communication Skills"> 
+				<Competency name="Written Communication Skills"> 
+					<Competency name="Typing Speed of 60 WPM"/> 
+				</Competency>
+			</Competency>
+			<Competency name="Computer Skills">
+				<Competency name="Languages">
+					<Competency name="C++"/>
+					<Competency name="HTML"/>
+					<Competency name="Python"/>
+					<Competency name="VHDL"/>
+					<Competency name="PHP"/>
+					<Competency name="SQL"/>
+					<Competency name="Javascript"/>
+					<Competency name="assembly languages"/>
+					<Competency name="MATLAB"/>
+					<Competency name="VB"/>
+					<Competency name=".NET"/>
+				</Competency>
+				<Competency name="Operating Systems">
+					<Competency name="Windows 7/Vista/XP"/>
+					<Competency name="Linux"/>
+					<Competency name="SunOS"/>
+				</Competency>
+				<Competency name="Software Packages">
+					<Competency name="AutoCAD"/>
+					<Competency name="MATLAB"/>
+					<Competency name="emacs"/>
+					<Competency name="MS Office"/>
+					<Competency name="Visual Studio"/>
+					<Competency name="OPNET"/>
+					<Competency name="Xilinx"/>
+					<Competency name="Altera"/>
+				</Competency>
+				<Competency name="Hardware">
+					<Competency name="Intel/AMD based PCs"/>
+					<Competency name="embedded systems"/>
+					<Competency name="smart phones"/>
+				</Competency>
+			</Competency>
+		</Qualifications> 
+		<Languages> 
+			<Language> 
+				<LanguageCode>EN</LanguageCode> 
+				<Read>true</Read> 
+				<Write>true</Write> 
+				<Speak>true</Speak> 
+			</Language>
+			<Language> 
+				<LanguageCode>DE</LanguageCode> 
+				<Read>true</Read> 
+			</Language>
+			<Language> 
+				<LanguageCode>ES</LanguageCode> 
+				<Read>true</Read> 
+			</Language>  
+		</Languages> 
+		<Achievements> 
+			<Achievement> 
+				<Date> 
+					<StringDate>2014</StringDate> 
+				</Date> 
+				<Description>Graduate, Command and General Staff College (Satellite Campus ILE)</Description> 
+			</Achievement>
+			<Achievement> 
+				<Date> 
+					<StringDate>2013</StringDate> 
+				</Date> 
+				<Description>Defense Acquisition Level I Certified</Description> 
+			</Achievement>
+			<Achievement> 
+				<Date> 
+					<StringDate>2007</StringDate> 
+				</Date> 
+				<Description>Graduate, Medical Information Management Course</Description> 
+			</Achievement>
+			<Achievement> 
+				<Date> 
+					<StringDate>2007</StringDate> 
+				</Date> 
+				<Description>Graduate, Captains Career Course</Description> 
+			</Achievement>
+			<Achievement> 
+				<Date> 
+					<StringDate>2007</StringDate> 
+				</Date> 
+				<Description>Graduate, Fort Campbell Pre-Ranger Course</Description> 
+			</Achievement>
+			<Achievement> 
+				<Date> 
+					<StringDate>2004</StringDate> 
+				</Date> 
+				<Description>Passed the Fundamentals of Engineering Exam</Description> 
+			</Achievement> 
+ 
+			<Achievement> 
+				<Date> 
+					<StringDate>2003</StringDate> 
+				</Date> 
+				<Description>Graduate, Air Assault School</Description> 
+			</Achievement> 
+			<Achievement> 
+				<Date> 
+					<StringDate>2003</StringDate> 
+				</Date> 
+				<Description>Graduate, Officer Basic Course</Description> 
+			</Achievement> 
+			<Achievement> 
+				<Date> 
+					<StringDate>2003</StringDate> 
+				</Date> 
+				<Description>Distinguised Military Graduate of the Ohio State University</Description> 
+			</Achievement>
+			<Achievement> 
+				<Date> 
+					<StringDate>2002</StringDate> 
+				</Date> 
+				<Description>Graduate, Basic Airborne Course</Description> 
+			</Achievement> 
+
+
+		</Achievements> 
+		<Associations> 
+			<Association type="Professional"> 
+				<Name>Healthcare Information and Management Systems Society</Name> 
+				<Link>www.himss.org</Link> 
+				<StartDate> 
+					<YearMonth>2008-02</YearMonth> 
+				</StartDate> 
+				<Role> 
+					<Name>Member</Name> 
+				</Role> 
+			</Association>
+			<Association type="Professional"> 
+				<Name>Association of the US Army</Name> 
+				<Link>www.ausa.org</Link> 
+				<StartDate> 
+					<YearMonth>2004-03</YearMonth> 
+				</StartDate> 
+				<Role> 
+					<Name>Member</Name> 
+				</Role> 
+			</Association>
+			<Association type="Professional"> 
+				<Name>National Society of Professional Engineers</Name> 
+				<Link>www.nspe.org</Link> 
+				<StartDate> 
+					<YearMonth>2004-07</YearMonth> 
+				</StartDate> 
+				<Role> 
+					<Name>Member</Name> 
+				</Role> 
+			</Association> 
+		</Associations> 
+		<References> 
+			<Reference type="Professional"> 
+				<PersonName> 
+					<FormattedName>LTC Eric E. Poulsen</FormattedName> 
+				</PersonName> 
+				<PositionTitle>Supervisor</PositionTitle> 
+				<ContactMethod> 
+					<Telephone> 
+						<FormattedNumber>1 7195267500</FormattedNumber> 
+					</Telephone> 
+					<InternetEmailAddress>eric.e.poulsen.mil@mail.mil</InternetEmailAddress> 
+				</ContactMethod> 
+				<Comments>Deputy Commander for Administration, Ft. Caron MEDDAC</Comments> 
+			</Reference> 
+		</References> 
+		<SecurityCredentials> 
+			<SecurityCredential> 
+				<Name>Secret Security Clearance (Active)</Name> 
+				<IssuingAuthority>Department of Defense</IssuingAuthority> 
+				<Description>Currently holding a secret security clearance.</Description> 
+				<EffectiveDate> 
+					<ValidFrom> 
+						<StringDate>4/1/2010</StringDate> 
+					</ValidFrom> 
+					<ValidTo> 
+						<StringDate>4/1/2020</StringDate> 
+					</ValidTo> 
+					<FirstIssuedDate> 
+						<StringDate>4/1/2000</StringDate> 
+					</FirstIssuedDate> 
+				</EffectiveDate> 
+			</SecurityCredential> 
+		</SecurityCredentials> 
+		<SpeakingEventsHistory>
+			<SpeakingEvent>
+				<EventName>CoS Business Alliance</EventName>
+				<Link>http://www.coloradospringsbusinessalliance.com/library/Industry_Team_Profiles/Business_Alliance_Healthcare_Team.pdf</Link>
+				<Description>Seminar on how the new Defense Health Agency will impact healthcare in Colorado Springs</Description>
+				<StartDate>7/14/2013</StartDate>
+				<Title>CoS/DHA Seminar</Title>
+			</SpeakingEvent>
+		</SpeakingEventsHistory>
+			
+		<ResumeAdditionalItems> 
+			<ResumeAdditionalItem type="Hobbies"> 
+				<EffectiveDate> 
+					<StartDate> 
+						<Year>2000</Year> 
+					</StartDate> 
+				</EffectiveDate> 
+				<Description>Rock Climbing</Description> 
+			</ResumeAdditionalItem> 
+		</ResumeAdditionalItems> 
+		<RevisionDate>2014-01-08</RevisionDate> 
+	</StructuredXMLResume> 
+	<NonXMLResume> 
+		<TextResume>The resume text would be entered here. No formatting would apply.</TextResume> 
+		<SupportingMaterials> 
+			<Link>http://www.my-resume.com</Link> 
+			<Description>Link to my online resume</Description> 
+		</SupportingMaterials> 
+	</NonXMLResume> 
+</Resume> 

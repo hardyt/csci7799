@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Control audio playback with HID input</title>
+
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<script type="text/javascript" src="hid.js"></script>
+<script type="text/javascript" src="audio.js"></script>
+<script type="text/javascript">
+function performAudioFunctions(b) {
+ switch(b) {
+  case 2:
+   playAudio();
+   break;
+  case 1:
+   rewindAudio();
+   break;
+  case 0:
+   forwardAudio();
+   break;
+  case 5:
+   increaseSpeed();
+   break;
+  case 4:
+   decreaseSpeed();
+   break;
+  case 3:
+   restartAudio();
+   break;
+ }
+}
+</script>
+
+<style>
+.buttons, .axes {
+  padding: 1em;
+}
+
+.button {
+  padding: 1em;
+  border-radius: 20px;
+  border: 1px solid black;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAAxJREFUCNdjYPjPAAACAgEAqiqeJwAAAABJRU5ErkJggg==);
+  background-size: 0% 0%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.pressed {
+  border: 1px solid red;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<div>
+  <audio id="myaudio" controls="controls" preload="auto">Canvas not supported</audio>
+</div>
+<div>
+<input type="text" id="audiofile" size="80" value="test.mp3" />
+</div>
+<div>
+  <button id="playbutton" onclick="playAudio();">Play</button>  
+  <button onclick="rewindAudio();">Rewind</button>
+  <button onclick="forwardAudio();">Fast forward</button>
+  <button onclick="increaseSpeed();">Increase speed</button>
+  <button onclick="decreaseSpeed();">Decrease speed</button>
+  <button onclick="restartAudio();">Restart</button>
+  <div id="rate"></div>
+
+     <script type="text/javascript">
+       // Create a couple of global variables to use. 
+       var oAudio = document.getElementById("myaudio"); // Audio element
+       var ratedisplay = document.getElementById("rate"); // Rate display area
+
+       // Hook the ratechange event and display the current playbackRate after each change
+       oAudio.addEventListener("ratechange", function () {
+         ratedisplay.innerHTML = "Rate: " + oAudio.playbackRate;
+       }, false);
+     </script>
+</div>
+
+<div><textarea rows="20" cols="50">Type in transcription here.</textarea></div>
+
+<h2 id="start">Press a button on your controller to start</h2>
+
+</body>
+</html>

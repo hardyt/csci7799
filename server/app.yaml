@@ -1,0 +1,57 @@
+application: thomasmhardy
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false
+
+libraries:
+- name: django
+  version: "1.2"
+- name: pycrypto
+  version: latest
+- name: endpoints
+  version: 1.0
+- name: webapp2
+  version: latest
+  
+handlers:
+
+- url: /static/
+  static_dir: static
+
+- url: /favicon\.ico
+  static_files: static/favicon.ico
+  upload: img/favicon\.ico
+
+
+#Script handlers
+
+- url: /
+  script: main.app
+
+- url: /resume2(/.*)?
+  script: resume2.py
+
+- url: /removeResume(/.*)?
+  script: resume2.py
+
+- url: /serveImg(/.*)?
+  script: resume2.py
+
+- url: /serveResume(/.*)?
+  script: resume2.py
+
+- url: /uploadResume
+  script: resume2.py
+
+# Endpoints handler: Must be /_ah/spi. Apps send requests to /_ah/api, but these are handled at /_ah/spi!!
+- url: /_ah/spi/.*
+  script: helloworld_api.APPLICATION
+
+- url: /js
+  static_dir: static/js
+- url: /bootstrap
+  static_dir: static/bootstrap
+- url: /
+  static_files: templates/index.html
+  upload: templates/index\.html  

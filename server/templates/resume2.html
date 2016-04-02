@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ISTM6205-10 FA2011 Assignment 3: Resume - Thomas M. Hardy</title>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="/static/resume2.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/static/resume2.js"></script>
+<script type="text/javascript" src="/static/jquery.nicescroll.min.js"></script>
+
+<script type="text/javascript"><!--
+	//I liked this idea fom the notes:
+	var dlu = new Date(document.lastModified);
+//--></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$("#dialog1").niceScroll({touchbehavior:false,cursorcolor:"#ACC",cursoropacitymax:0.7,cursorwidth:11,cursorborder:"1px solid #BCC",cursorborderradius:"8px",background:"#ccc"});
+		$("#dialog2").niceScroll({touchbehavior:false,cursorcolor:"#ACC",cursoropacitymax:0.7,cursorwidth:11,cursorborder:"1px solid #BCC",cursorborderradius:"8px",background:"#ccc"});
+		$("#dialog3").niceScroll({touchbehavior:false,cursorcolor:"#ACC",cursoropacitymax:0.7,cursorwidth:11,cursorborder:"1px solid #BCC",cursorborderradius:"8px",background:"#ccc"});
+		$("#dialog4").niceScroll({touchbehavior:false,cursorcolor:"#ACC",cursoropacitymax:0.7,cursorwidth:11,cursorborder:"1px solid #BCC",cursorborderradius:"8px",background:"#ccc"});
+		$("#dialog5").niceScroll({touchbehavior:false,cursorcolor:"#ACC",cursoropacitymax:0.7,cursorwidth:11,cursorborder:"1px solid #BCC",cursorborderradius:"8px",background:"#ccc"});
+		$("#dialog6").niceScroll({touchbehavior:false,cursorcolor:"#ACC",cursoropacitymax:0.7,cursorwidth:11,cursorborder:"1px solid #BCC",cursorborderradius:"8px",background:"#ccc"});
+
+	});
+</script>
+
+</head>
+
+
+<body>
+<div class="document">
+
+
+<div id="dialog_notes" class="ui-corner-all dialog">
+ Notes:
+ <p>This page implements several advanced features. The first feature is the functionality to host 
+ <a href="#" id="button_resumes">multiple resumes</a>. Removing the resume via the red 'x' executes an AJAX 
+ funtion which removes the resume from the server and from the table. The second feature includes the ability to 
+ <a href="#" id="button_upload">upload XML resumes</a> to be stored in the Google App Engine Datastore. 
+ You can even upload a photo to go along with the resume. Next, a custom Django filter is used to display most of the tables. 
+ Lastly, using the HR-XML namespace in the XML does not break anything (the examples do break).</p>
+ <p>To get the &quot;A&quot; grade, I utilized AJAX, GAE's datastore, jQuery script, jQuery UI script, and jQuery CSS styles.
+ All files will be uploaded to Blackboard. This document is also valid XHTML 1.0 Strict.</p>
+ <p>To easily navigate from the links that bring up the dialogs, bring the mouse directly to the right. The dialog will
+ stay in place. The entire page is designed to fit within a small window so resumes can be compared on the same screen. 
+ You can click on the links to clear the dialog.</p>
+ <p class="bottomright">Date last updated: 
+ <script type="text/javascript"><!-- 
+  document.write(dlu.toGMTString()); 
+ //--></script></p>
+</div><!-- End notes -->
+
+
+
+<div id="administrative_information">
+ <div id="name">{{ PersonName|upper }}</div>
+ <div id="brief_date">{{ RevisionDate }}</div>
+</div><!-- End administrative information -->
+
+
+<div id="photo">
+ <img src="{{ resume_photo }}" width="450" height="675" alt="Resume Photo" />
+</div><!-- End photo -->
+
+
+<div id="menu" class="ui-corner-all dialog hover_links">
+ <ul>
+  <li><a href="#" id="button1" class="button">Contact Information </a></li>
+  <li><a href="#" id="button2" class="button">Executive Summary &amp; Objective</a></li>
+  <li><a href="#" id="button3" class="button">Employment, Education, &amp; Military </a></li>
+  <li><a href="#" id="button4" class="button">Licenses &amp; Certifications </a></li>
+  <li><a href="#" id="button5" class="button">Pubs, Patents, &amp; Speaking Events</a></li>
+  <li><a href="#" id="button6" class="button">Qualifications &amp; Acheivements </a></li>
+  <li><a href="#" id="button7" class="button">Languages &amp; Associations </a></li>
+  <li><a href="#" id="button8" class="button">References &amp; Security Credentials</a></li>
+  <li><a href="#" id="button_hide_displays" class="button_bottom">Hide Notes and Menu</a></li>
+ </ul>
+</div><!-- End hover links -->
+
+<div id="show_link" class="ui-corner-all dialog hover_links">
+ <ul>
+  <li><a href="#" id="button_show_displays" class="button_bottom">Show Notes and Menu</a></li>
+ </ul>
+</div><!-- End hover links -->
+
+
+
+
+<!-- Begin data display -->
+
+	<div id="dialog1" class="ui-corner-all dialog data_display">
+		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+		<div class="viewport">
+			 <div class="overview">
+		<h3 class="ui-widget-header ui-corner-top">Contact Information</h3>
+		<table class="left_align_text">
+			<tr><th>Name</th><td>{{ PersonName }}</td></tr>
+			<tr><th>Street Address</th><td>
+				{% for AddressLine in ContactInformation.StreetAddress %}
+					{{ AddressLine }}<br/>
+				{% endfor %}	
+			</td></tr>
+			<tr><th>City, State Zip</th><td>
+				{% if ContactInformation.City and ContactInformation.State %}
+					{{ ContactInformation.City  }}, 
+					{{ ContactInformation.State  }} 
+				{% endif %}
+				{{ ContactInformation.Zip|default_if_none:""  }}
+			</td></tr>
+			<tr><th>Telephone</th><td>
+				{% for key, value in ContactInformation.Telephone.items %}
+					{{ value }}<br/><!-- 1/11/14 removed {{ key }}:  from this as it was displaying "FormattedNumber:" //-->
+				{% endfor %}
+			</td></tr>
+			<tr><th>Fax</th><td>{{ ContactInformation.Fax|default_if_none:""  }}</td></tr>
+			<tr><th>Email Address</th><td>
+				{% if ContactInformation.EmailAddress %}
+					<a href="mailto:{{ ContactInformation.EmailAddress }}">
+					{{ ContactInformation.EmailAddress }}</a>
+				{% endif %}
+			</td></tr>
+		</table>
+		</div></div>
+	</div><!-- End Contact Information -->
+
+	<div id="dialog2" class="ui-corner-all dialog data_display">
+		<h3 class="ui-widget-header ui-corner-top">Executive Summary</h3>
+		<table><tr><td>{{ ExecutiveSummary }}</td></tr></table>
+		<h3 class="ui-widget-header">Objective</h3>
+		<table><tr><td>{{ Objective }}</td></tr></table>
+	</div><!-- End Executive Summary -->
+	
+	
+	<div id="dialog3" class="ui-corner-all dialog data_display">
+		<h3 class="ui-widget-header ui-corner-top">Employment History</h3>
+		
+		<!-- this is the first instance of a Django custom tag that spits out a
+		table from HR-XML Resume input. --> 
+		{{ EmploymentHistory|hrxmlTable|safe }}
+		<h3 class="ui-widget-header">Education History</h3>
+		{{ EducationHistory|hrxmlTable|safe }}
+		<h3 class="ui-widget-header">Military History</h3>
+		{{ MilitaryHistory|hrxmlTable|safe }}
+	</div><!-- End employment, education, and military history -->
+	
+	
+	<div id="dialog4" class="ui-corner-all dialog data_display">
+		<h3 class="ui-widget-header ui-corner-top">Licenses and Certifications</h3>
+		{{ LicensesAndCertifications|hrxmlTable|safe }}
+	</div><!-- End Licenses and Certifications -->
+	
+	
+	<div id="dialog5" class="ui-corner-all dialog data_display">
+		<h3 class="ui-widget-header ui-corner-top">Publications</h3>
+		{{ PublicationHistory|hrxmlTable|safe }}
+		<h3 class="ui-widget-header">Patent History</h3>
+		{{ PatentHistory|hrxmlTable|safe }}		
+		<h3 class="ui-widget-header">Speaking Events</h3>
+		{{ SpeakingEventHistory|hrxmlTable|safe }}
+	</div><!-- End Publications, Patent, and Speaking Events -->
+	
+	
+	<div id="dialog6" class="ui-corner-all dialog data_display">
+		<h3 class="ui-widget-header ui-corner-top">Qualifications</h3>
+		<table><tr><td><ul>{{ Qualifications|unordered_list }}</ul></td></tr></table>
+		<h3 class="ui-widget-header">Achievements</h3>
+		{{ Achievements|hrxmlTable|safe }}
+	</div><!-- End Qualifications and Achievements -->
+	
+	
+	<div id="dialog7" class="ui-corner-all dialog data_display">
+		<h3 class="ui-widget-header ui-corner-top">Languages</h3>
+		{{ Languages|hrxmlTable|safe }}
+		<h3 class="ui-widget-header">Associations</h3>
+		{{ Associations|hrxmlTable|safe }}		
+	</div><!-- End Languages and Associations -->
+	
+	
+	<div id="dialog8" class="ui-corner-all dialog data_display">
+		<h3 class="ui-widget-header ui-corner-top">References</h3>
+		{{ References|hrxmlTable|safe }}
+		<h3 class="ui-widget-header">Security Credentials</h3>
+		{{ SecurityCredentials|hrxmlTable|safe }}		
+	</div><!-- End References and Security Credentials -->
+	
+<!-- End data display -->
+
+
+
+
+<div id="pop_ups" class="dialog">
+ <div id="dialog_resumes" title="Resume Picker">
+	<table><tr><th>Resume Date</th><th>Name</th><th>Date Uploaded</th><th>XML</th><th>Remove</th></tr>
+	{% for resume in resumes %}
+		<tr id="{{ resume.key }}">
+		 <td>{{ resume.resumeDate|date:"M j, Y" }}</td>
+		 <td><a href="/resume2/{{ resume.key }}" title="Display Resume">{{ resume.name }}</a></td>
+		 <td>{{ resume.dateAdded|date:"M j, Y" }}</td>
+		 <td align="center"><a href="/serveResume/{{ resume.key }}" title="Right click and save as"><img src="/static/download.gif" alt="Download resume" /></a></td>
+		 <td align="center"><a href="#" onclick="removeResume('{{ resume.key }}')"><img src="/static/Red-x.png" alt="Remove resume" /></a></td>
+		</tr>
+	{% endfor %}
+	</table>
+ </div>
+ <div id="dialog_upload" title="Resume Uploader">
+  <form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
+ 	<!-- I would normally test the inputs with Javascript, but I've already worked 
+		 on this enough! So please don't try to upload anything except your
+		 HR-XML examples. -->
+	<p>Upload HR-XML: <input type="file" name="file" /></p>
+	<p>Upload Photo: <input type="file" name="photo" /></p>
+	<p><input type="submit" name="Submit" value="Submit" /></p>
+  </form>
+ </div>
+</div><!-- End pop ups -->
+
+
+
+<!-- This page is valid XHTML 1.0 Strict -->
+<a href="http://validator.w3.org/check?uri=referer"><img class="no_border" id="w3c" src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" /></a>
+
+
+
+
+</div><!-- End document -->
+</body>
+</html>

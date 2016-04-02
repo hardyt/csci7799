@@ -1,0 +1,188 @@
+/* 
+CSS for HR-XML Resume display. This is slightly modified from the version used
+for Assignment 2.
+*/
+
+html, body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #336699;
+	margin:0;
+	padding:0;
+}
+
+body {
+	background-image:url(/static/background_bar.gif);
+	background-repeat:repeat-x;
+	background-color:#5D9BA8;
+
+}
+
+p {
+	padding:0px;
+	margin:0px 0px 10px 0px;
+}
+
+p.bottomright {
+	position:absolute;
+	bottom:0px;
+	right:5px;
+}
+
+h3 { 
+	margin: 0; 
+	padding: 0.4em; 
+	text-align: center; 
+}
+
+img {
+	border:none;
+}
+
+table {
+	border:1px solid #000000;
+	border-collapse:collapse;
+	width:100%;
+}
+table.left_align_text {
+	text-align:left;
+}
+td, th {
+	font-size: 10px;
+	border-width:1px;
+	padding:2px;
+	border-style:solid;
+	vertical-align:top;
+}
+
+a {
+	color: #FF0000;
+	text-decoration: none;
+}
+
+a:hover,a:active {
+	text-decoration: underline;
+	background-color:#FFFFFF;
+}
+
+a:link,a:visited {
+	color:#CC0000;
+	padding:0px;
+	background-color:#FFFFFF;
+	text-decoration:none;
+}
+
+/* begin classes */
+
+.button { 
+	padding: .5em 1em; 
+	text-decoration: none; 
+}
+
+.bottom_button {
+	padding: .5em 1em; 
+	text-decoration: none; 
+}
+
+
+.dialog { 
+	padding: 0.4em; 
+	position: relative; 
+	background-color:#FFFFFF;
+	border-color:#333333;
+	border-style:solid;
+	border-width:thin;
+	color:#000000;
+}
+
+.data_display {
+	position:fixed;
+	top:10px;
+	left:320px;
+	width:500px;
+	max-height:89%;
+	z-index:2;
+	overflow: auto;
+}
+
+.hover_links ul {
+	list-style-type:none;
+	line-height:15px;
+	width:200px;
+	margin:0;
+	padding:0;
+}
+
+.hover_links li a:link,.hover_links li a:visited, .hover_links li a:active {
+	display:block;
+	padding:4px;
+	color:#000000;
+	text-decoration:none;
+}
+
+.hover_links li a:hover {
+	background-color:#CCCCCC;
+}
+
+
+
+
+/* begin elements by id */
+
+#document {
+	font-size: 12px;
+}
+
+#administrative_information {
+	position:fixed;
+	left:10px;
+	top:10px;
+	width:200px;
+	color:#FFFFFF;
+	font-size:14px;
+}
+
+#name {
+	font-size:16px;
+}
+
+#email_address a {
+	color:#FF0000;
+}
+
+#dialog_notes {
+	position:fixed;
+	bottom:40px;
+	left:270px;
+	width:540px;
+	height:230px;
+	z-index:1;
+}
+
+#photo {
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:-1;
+}
+
+#menu {
+	position:fixed;
+	width:200px;
+	bottom:40px;
+	left:10px;
+	font-size:12px;
+}
+
+#w3c {
+	position:fixed;
+	bottom:0px;
+	left:0px;
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+
+
