@@ -31,19 +31,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.api.client.auth.oauth2.TokenResponse;
+import com.google.api.client.auth.oauth2.TokenResponseException;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.InputStreamContent;
 import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.json.JsonFactory;
-import com.loopj.android.http.*;
-import cz.msebera.android.httpclient.Header;
+import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.storage.Storage;
+import com.loopj.android.http.*;
+import cz.msebera.android.httpclient.Header;
 
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -60,8 +65,11 @@ import com.appspot.your_app_id.helloworld.model.HelloGreetingCollection;
 import com.google.common.base.Strings;
 
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringReader;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -108,6 +116,7 @@ public class MainActivity extends Activity {
   private JsonFactory JSON_FACTORY = new JacksonFactory();
   private HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
   private String authorization = "";
+  private String URI = "";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -257,12 +266,10 @@ public class MainActivity extends Activity {
         displayGreetings(greeting);
         Log.i(LOG_TAG, "Finished list.");
 
-        // List files
+        // List files - not implemented yet
 
-
-
-
-        // Get upload URL
+        /*
+        // Get upload URL for blobstore option
 
         // Use of an anonymous class is done for sample code simplicity. {@code AsyncTasks} should be
         // static-inner or top-level classes to prevent memory leak issues.
@@ -302,61 +309,8 @@ public class MainActivity extends Activity {
           Log.e(LOG_TAG, "Error waiting for async task to end: " + e.getMessage());
         }
 
-
-
         Log.i(LOG_TAG, "Got upload URL: " + strUploadURL);
-
-        /*
-        //Save file to generated url
-        HttpPost httppost = new HttpPost(strUploadURL);
-        Log.i(LOG_TAG, "1.");
-        FileBody fileBody = new FileBody(file);
-        Log.i(LOG_TAG, "2.");
-        MultipartEntityBuilder reqEntity = MultipartEntityBuilder.create();
-        Log.i(LOG_TAG, "3.");
-        reqEntity.addPart("file", fileBody);
-        Log.i(LOG_TAG, "4.");
-        httppost.setEntity(reqEntity.build());
-        Log.i(LOG_TAG, "5.");
-        String str = "";
-        Log.i(LOG_TAG, "6.");
-        try{
-          //Here "uploaded" servlet is automatically invoked
-          HttpClient httpClient = new DefaultHttpClient();
-          Log.i(LOG_TAG, "7: " + httppost.getAllHeaders().toString());
-          HttpResponse response = httpClient.execute(httppost);
-          Log.i(LOG_TAG, "8.");
-          //Response will be returned by "uploaded" servlet in JSON format
-          HttpEntity urlEntity = response.getEntity();
-          Log.i(LOG_TAG, "9.");
-          InputStream in = urlEntity.getContent();
-          Log.i(LOG_TAG, "10.");
-          while (true) {
-            int ch = in.read();
-            if (ch == -1)
-              break;
-            str += (char) ch;
-          }
-          Log.i(LOG_TAG, "11.");
-        } catch (Exception e){
-          Log.e(LOG_TAG, "Error uploading file, httppost: " + e.getMessage() + e.getStackTrace().toString());
-        }
-        Log.i(LOG_TAG, "12.");
-
-        try{
-          JSONObject resultJson = new JSONObject(str);
-          String blobKey = resultJson.getString("blobKey");
-          String servingUrl = resultJson.getString("servingUrl");
-          greeting.setMessage(blobKey + " " + servingUrl);
-          displayGreetings(greeting);
-        }catch (Exception e) {
-          Log.e(LOG_TAG, "Error parsing JSON: " + e.getMessage());
-        }
-        Log.i(LOG_TAG, "Done with upload: " + greeting.getMessage());
         */
-
-
-
 
 
         Log.i(LOG_TAG, "checking if I can create a credential");
@@ -389,81 +343,64 @@ public class MainActivity extends Activity {
         }
 
         // Everything is set to post the file.
+        URI = "https://www.googleapis.com" +
+                "/upload/storage/v1/b/" +
+                BUCKET_NAME +
+                "/o?uploadType=media&" +
+                "name=" + file.getName();
 
-        new AsyncTask<Void, Void, Void>(){
+        new AsyncTask<Void, Void, GoogleCredential>(){
 
           @Override
-          protected Void doInBackground(Void... params){
+          protected GoogleCredential doInBackground(Void... unused) {
             // First run an async credential update.
             Log.i(LOG_TAG, "Cred3");
             // refresh credentials
             try {
               credential.refreshToken();
-              //String URI = "https://storage.googleapis.com/" + BUCKET_NAME;
-              String URI = "https://www.googleapis.com" +
-                      "/upload/storage/v1/b/" +
-                      BUCKET_NAME +
-                      "/o?uploadType=media&" +
-                      "name=" + file.getName();
-              HttpRequestFactory requestFactory = httpTransport.createRequestFactory(credential);
-              GenericUrl url = new GenericUrl(URI);
-              //HttpRequest request = requestFactory.buildGetRequest(url);
-              HttpRequest request = requestFactory.buildPostRequest(url, new UrlEncodedContent(file));
-              HttpResponse response = request.execute();
-              String content = request.getHeaders().toString();
-              Log.i(LOG_TAG, "request headers are: " + content);
-              authorization = request.getHeaders().getAuthorization().toString();
-              Log.i(LOG_TAG, "authorization is: " + authorization);
-              content = response.parseAsString();
-              Log.i(LOG_TAG, "response is: " + content);
-              new Storage.Builder(httpTransport, JSON_FACTORY, credential)
-                      .setApplicationName("thomasmhardy").build();
             } catch (IOException e) {
               Log.e(LOG_TAG, "IOException: " + e.getMessage());
             }
-            return null;
+            return credential;
           }
 
           @Override
-          protected void onPostExecute(Void result){
-            // Then run async post.
-            /*
+          protected void onPostExecute(final GoogleCredential credential) {
+            // Then run async put.
             AsyncHttpClient client = new AsyncHttpClient();
-            String url = "http://www.googleapis.com" +
-                    "/upload/storage/v1/b/" +
-                    BUCKET_NAME +
-                    "/o?uploadType=media&" +
-                    "name=" + file.getName();
-            Log.i(LOG_TAG, "URL is: " + url);
+            Log.i(LOG_TAG, "URL is: " + URI);
             RequestParams params = new RequestParams();
-            params.put("Content-Type", "binary/octet-stream");
-            params.put("Content-Length", "" + file.length());
-            params.put("Authorization", authorization);
+            //params.put("Content-Type", "binary/octet-stream");
+            //params.put("Content-Length", "" + file.length());
+            client.addHeader("Content-Type", "binary/octet-stream");
+            client.addHeader("Authorization", "Bearer " + credential.getAccessToken());
             try {
               params.put(file.getName(), file);
             } catch (FileNotFoundException e) {
-              Log.e(LOG_TAG, "File not found. Whomp: " + e.getMessage());
+              Log.e(LOG_TAG, "File not found: " + e.getMessage());
             }
-            Log.i(LOG_TAG, "Params: " + params.toString());
-            client.post(url, params, new AsyncHttpResponseHandler() {
+            Log.i(LOG_TAG, "Client?: " + client);
 
+            client.post(URI, params, new AsyncHttpResponseHandler() {
               @Override
               public void onStart() {
                 // called before request is started
-                Log.i(LOG_TAG, "Request starting...");
+                Log.i(LOG_TAG, "Request starting with credential: " + credential.getAccessToken());
               }
 
               @Override
               public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 // called when response HTTP status is "200 OK"
-                Log.i(LOG_TAG, "Success: " + response.toString());
+                String strResponse = new String(response);
+                Log.i(LOG_TAG, "Success: " + strResponse);
               }
 
               @Override
               public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                Log.e(LOG_TAG, "Status code: " + statusCode + " Headers: " + headers.toString() +
-                        " Error response: " + errorResponse.toString() + " Exception: " + e.getMessage());
+                String strErrorResponse = new String(errorResponse);
+                Log.e(LOG_TAG, "Status code: " + statusCode + " Headers: " + Arrays.toString(headers) +
+                        " Error response: " + strErrorResponse + " Exception: " + e.getMessage());
               }
 
               @Override
@@ -472,7 +409,6 @@ public class MainActivity extends Activity {
                 Log.i(LOG_TAG, "Retrying...");
               }
             });
-            */
           }
         }.execute();
       };
