@@ -10,6 +10,7 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
+from google.appengine.ext import blobstore
 
 # TODO: Replace the following lines with client IDs obtained from the APIs
 # Console or Cloud Console.
@@ -31,12 +32,14 @@ class GreetingCollection(messages.Message):
     """Collection of Greetings."""
     items = messages.MessageField(Greeting, 1, repeated=True)
 
+class UploadFile(messages.Message):
+    messages = messages.BytesField(1)
+
 
 STORED_GREETINGS = GreetingCollection(items=[
     Greeting(message='hello world!'),
     Greeting(message='goodbye world!'),
 ])
-
 
 @endpoints.api(name='helloworld', version='v1',
                allowed_client_ids=[WEB_CLIENT_ID, ANDROID_CLIENT_ID,
@@ -71,7 +74,10 @@ class HelloWorldApi(remote.Service):
                       name='greetings.getGreeting')
     def greeting_get(self, request):
         try:
-            return STORED_GREETINGS.items[request.id]
+            if(request.id!=99):
+                return STORED_GREETINGS.items[request.id]
+            else:
+                return Greeting(message=blobstore.create_upload_url('/upload_file'))
         except (IndexError, TypeError):
             raise endpoints.NotFoundException('Greeting %s not found.' %
                                               (request.id,))
@@ -84,6 +90,7 @@ class HelloWorldApi(remote.Service):
         email = (current_user.email() if current_user is not None
                  else 'Anonymous')
         return Greeting(message='hello %s' % (email,))
+
 
 
 APPLICATION = endpoints.api_server([HelloWorldApi])

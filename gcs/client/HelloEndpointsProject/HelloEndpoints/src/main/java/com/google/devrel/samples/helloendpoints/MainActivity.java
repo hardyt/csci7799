@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,34 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpEntity;
+import org.apache.http.concurrent.FutureCallback;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
+import org.apache.http.nio.client.methods.AsyncCharConsumer;
+import org.apache.http.nio.client.methods.HttpAsyncMethods;
+import org.apache.http.nio.protocol.HttpAsyncRequestProducer;
+import org.json.JSONObject;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.apache.http.impl.nio.client.HttpAsyncClients;
+import java.nio.CharBuffer;
+import org.apache.http.nio.IOControl;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.conn.util.PublicSuffixMatcherLoader;
+
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -43,20 +72,21 @@ import com.appspot.your_app_id.helloworld.model.HelloGreeting;
 import com.appspot.your_app_id.helloworld.model.HelloGreetingCollection;
 import com.google.common.base.Strings;
 
+
 import java.io.IOException;
+import java.net.URLConnection;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import java.io.File;
-import com.google.devrel.samples.helloendpoints.FileChooser;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import com.google.devrel.samples.helloendpoints.R.id;
 
 import static com.google.devrel.samples.helloendpoints.BuildConfig.DEBUG;
-
-import com.google.devrel.samples.helloendpoints.CloudStorage;
 
 /**
  * Sample Android application for the Hello World tutorial for Google Cloud Endpoints. The sample
@@ -224,37 +254,253 @@ public class MainActivity extends Activity {
         HelloGreeting greeting = new HelloGreeting();
         greeting.setMessage(file.getAbsolutePath());
         displayGreetings(greeting);
-        //list buckets
+        Log.i(LOG_TAG, "Finished list.");
+
+        // List files
+
+
+
+
+        // Get upload URL
+
+        // Use of an anonymous class is done for sample code simplicity. {@code AsyncTasks} should be
+        // static-inner or top-level classes to prevent memory leak issues.
+        // @see http://goo.gl/fN1fuE @26:00 for an great explanation.
+        AsyncTask<Integer, Void, HelloGreeting> getAndDisplayGreeting =
+                new AsyncTask<Integer, Void, HelloGreeting> () {
+                  @Override
+                  protected HelloGreeting doInBackground(Integer... integers) {
+                    // Retrieve service handle using null credential since this is an unauthenticated call.
+                    Helloworld apiServiceHandle = AppConstants.getApiServiceHandle(null);
+
+                    try {
+                      GetGreeting getGreetingCommand = apiServiceHandle.greetings().getGreeting(integers[0]);
+                      HelloGreeting greeting = getGreetingCommand.execute();
+                      return greeting;
+                    } catch (IOException e) {
+                      Log.e(LOG_TAG, "Exception during API call", e);
+                    }
+                    return null;
+                  }
+
+                  @Override
+                  protected void onPostExecute(HelloGreeting greeting) {
+                    if (greeting!=null) {
+                      displayGreetings(greeting);
+                    } else {
+                      Log.e(LOG_TAG, "No greetings were returned by the API.");
+                    }
+                  }
+                };
+
+        String strUploadURL = "";
         try {
-          List<String> buckets = CloudStorage.listBuckets(getApplicationContext());
-          for (Iterator<String> i = buckets.iterator(); i.hasNext();) {
-            String item = i.next();
-            Log.e(LOG_TAG, item);
+          greeting = getAndDisplayGreeting.execute(99).get();
+          strUploadURL = greeting.getMessage();
+        } catch (Exception e) {
+          Log.e(LOG_TAG, "Error waiting for async task to end: " + e.getMessage());
+        }
+
+
+
+        Log.i(LOG_TAG, "Got upload URL: " + strUploadURL);
+
+        /*
+        //Save file to generated url
+        HttpPost httppost = new HttpPost(strUploadURL);
+        Log.i(LOG_TAG, "1.");
+        FileBody fileBody = new FileBody(file);
+        Log.i(LOG_TAG, "2.");
+        MultipartEntityBuilder reqEntity = MultipartEntityBuilder.create();
+        Log.i(LOG_TAG, "3.");
+        reqEntity.addPart("file", fileBody);
+        Log.i(LOG_TAG, "4.");
+        httppost.setEntity(reqEntity.build());
+        Log.i(LOG_TAG, "5.");
+        String str = "";
+        Log.i(LOG_TAG, "6.");
+        try{
+          //Here "uploaded" servlet is automatically invoked
+          HttpClient httpClient = new DefaultHttpClient();
+          Log.i(LOG_TAG, "7: " + httppost.getAllHeaders().toString());
+          HttpResponse response = httpClient.execute(httppost);
+          Log.i(LOG_TAG, "8.");
+          //Response will be returned by "uploaded" servlet in JSON format
+          HttpEntity urlEntity = response.getEntity();
+          Log.i(LOG_TAG, "9.");
+          InputStream in = urlEntity.getContent();
+          Log.i(LOG_TAG, "10.");
+          while (true) {
+            int ch = in.read();
+            if (ch == -1)
+              break;
+            str += (char) ch;
           }
-        } catch(Exception e)
-        {
-          Log.e(LOG_TAG, "Error getting buckets: " + e.getMessage());
+          Log.i(LOG_TAG, "11.");
+        } catch (Exception e){
+          Log.e(LOG_TAG, "Error uploading file, httppost: " + e.getMessage() + e.getStackTrace().toString());
         }
+        Log.i(LOG_TAG, "12.");
 
-        //upload to cloud storage
+        try{
+          JSONObject resultJson = new JSONObject(str);
+          String blobKey = resultJson.getString("blobKey");
+          String servingUrl = resultJson.getString("servingUrl");
+          greeting.setMessage(blobKey + " " + servingUrl);
+          displayGreetings(greeting);
+        }catch (Exception e) {
+          Log.e(LOG_TAG, "Error parsing JSON: " + e.getMessage());
+        }
+        Log.i(LOG_TAG, "Done with upload: " + greeting.getMessage());
+        */
+
+        CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault();
         try {
-          CloudStorage.uploadFile("simple-cloud-storage-51fcfacb-f44c-4fb7-a120-197838f3a3a3",
-                  file.getAbsolutePath(), getApplicationContext());
-        } catch(Exception e)
-        {
-          Log.e(LOG_TAG, "Error uploading file: " + e.getMessage());
+          // Start the client
+          httpclient.start();
+
+          // Execute request
+          String url = "http://storage.googleapis.com/thomasmhardy.appspot.com/" + file.getName();
+          final HttpPost request1 = new HttpPost(url);
+          request1.addHeader("Content-Type", "binary/octet-stream");
+          request1.addHeader("Content-Length", "" + file.length());
+          Future<HttpResponse> future = httpclient.execute(request1, null);
+          // and wait until a response is received
+          try {
+            HttpResponse response1 = future.get();
+            Log.i(LOG_TAG, request1.getRequestLine() + "->" + response1.getStatusLine());
+          } catch (ExecutionException e) {
+            Log.e(LOG_TAG, "ExecutionException: " + e.getMessage());
+          } catch (InterruptedException e) {
+            Log.e(LOG_TAG, "InterruptedException: " + e.getMessage());
+          }
+          /*
+          // One most likely would want to use a callback for operation result
+          final CountDownLatch latch1 = new CountDownLatch(1);
+          final HttpGet request2 = new HttpGet("http://www.apache.org/");
+          httpclient.execute(request2, new FutureCallback<HttpResponse>() {
+
+            public void completed(final HttpResponse response2) {
+              latch1.countDown();
+              System.out.println(request2.getRequestLine() + "->" + response2.getStatusLine());
+            }
+
+            public void failed(final Exception ex) {
+              latch1.countDown();
+              System.out.println(request2.getRequestLine() + "->" + ex);
+            }
+
+            public void cancelled() {
+              latch1.countDown();
+              System.out.println(request2.getRequestLine() + " cancelled");
+            }
+
+          });
+          try {
+            latch1.await();
+          } catch (Exception e) {
+            //
+          }
+          */
+
+          /*
+          // In real world one most likely would also want to stream
+          // request and response body content
+          final CountDownLatch latch2 = new CountDownLatch(1);
+          final HttpGet request3 = new HttpGet("http://www.apache.org/");
+          HttpAsyncRequestProducer producer3 = HttpAsyncMethods.create(request3);
+          AsyncCharConsumer<HttpResponse> consumer3 = new AsyncCharConsumer<HttpResponse>() {
+
+            HttpResponse response;
+
+            @Override
+            protected void onResponseReceived(final HttpResponse response) {
+              this.response = response;
+            }
+
+            @Override
+            protected void onCharReceived(final CharBuffer buf, final IOControl ioctrl) throws IOException {
+              // Do something useful
+            }
+
+            @Override
+            protected void releaseResources() {
+            }
+
+            @Override
+            protected HttpResponse buildResult(final HttpContext context) {
+              return this.response;
+            }
+
+          };
+
+          httpclient.execute(producer3, consumer3, new FutureCallback<HttpResponse>() {
+
+            public void completed(final HttpResponse response3) {
+              latch2.countDown();
+              System.out.println(request2.getRequestLine() + "->" + response3.getStatusLine());
+            }
+
+            public void failed(final Exception ex) {
+              latch2.countDown();
+              System.out.println(request2.getRequestLine() + "->" + ex);
+            }
+
+            public void cancelled() {
+              latch2.countDown();
+              System.out.println(request2.getRequestLine() + " cancelled");
+            }
+
+          });
+          try {
+            latch2.await();
+          } catch (Exception e) {
+            //
+          }
+          */
+
+        } finally {
+          try {
+            httpclient.close();
+          } catch (IOException e) {
+          }
         }
 
-      }
+
+
+        /*
+        HttpPost httppost = new HttpPost(url);
+
+        FileBody filebody = new FileBody(file);
+
+        MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+        multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        multipartEntity.addPart("file", filebody);
+        httppost.setEntity(multipartEntity.build());
+        Log.i(LOG_TAG, "Executing request " + httppost.getRequestLine( ) );
+        try {
+          HttpResponse response = httpclient.execute( httppost );
+          Log.i(LOG_TAG, "Response: " + response.getStatusLine().toString());
+        } catch (ClientProtocolException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
+        httpclient.getConnectionManager( ).shutdown( );
+        */
+      };
+
 
     });
     filechooser.showDialog();
   }
 
-            /**
-             * This method is invoked when the "Multiply Greeting" button is clicked. See activity_main.xml
-             * for the dynamic reference to this method.
-             */
+
+  /**
+   * This method is invoked when the "Multiply Greeting" button is clicked. See activity_main.xml
+   * for the dynamic reference to this method.
+   */
 
   public void onClickSendGreetings(View view) {
     View rootView = view.getRootView();

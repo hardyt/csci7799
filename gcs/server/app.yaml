@@ -47,6 +47,9 @@ handlers:
 # Endpoints handler: Must be /_ah/spi. Apps send requests to /_ah/api, but these are handled at /_ah/spi!!
 - url: /_ah/spi/.*
   script: helloworld_api.APPLICATION
+- url: /_ah/upload/.*
+  script: serve.app
+  login: required
 
 - url: /js
   static_dir: static/js
