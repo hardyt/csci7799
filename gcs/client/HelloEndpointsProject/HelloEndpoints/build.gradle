@@ -22,7 +22,9 @@ dependencies {
     // BEGIN Google APIs
 
     // Play Services will validate the application prior to allowing OAuth2 access.
-    compile(group: 'com.google.android.gms', name: 'play-services', version: '3.2.25')
+    compile(group: 'com.google.android.gms', name: 'play-services', version: '3.2.25') {
+        exclude group: 'com.google.guava'
+    }
 
     // The following lines implement maven imports as defined at:
     // https://code.google.com/p/google-api-java-client/wiki/Setup
@@ -58,7 +60,10 @@ dependencies {
     }
 
     // This is used by the Google HTTP client library.
-    compile(group: 'com.google.guava', name: 'guava', version: '14.0.+')
+
+    compile('com.google.http-client:google-http-client-jackson2:1.15.0-rc')
+    compile('com.google.apis:google-api-services-storage:v1-rev66-1.21.0')
+
     compile files('libs/android-async-http-1.4.9.jar')
     compile files('libs/httpclient-4.3.6.jar')
 }
@@ -70,6 +75,7 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 21
+        multiDexEnabled true
     }
 }
 

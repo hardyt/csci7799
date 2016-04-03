@@ -31,8 +31,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
 import com.loopj.android.http.*;
 import cz.msebera.android.httpclient.Header;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.storage.Storage;
 
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -51,7 +61,14 @@ import com.google.common.base.Strings;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -329,8 +346,72 @@ public class MainActivity extends Activity {
         */
 
 
+        String BUCKET_NAME = "thomasmhardy.appspot.com";
+        String SERVICE_ACCOUNT_EMAIL = "helloendpointsexample@thomasmhardy.iam.gserviceaccount.com";
+
+        String STORAGE_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write";
+        JsonFactory JSON_FACTORY = new JacksonFactory();
+
+        Log.i(LOG_TAG, "checking if I can create a credential");
+        HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
+        Log.i(LOG_TAG, "Cred-2");
+        try {
+          KeyStore keystore = KeyStore.getInstance("PKCS12");
+          Log.i(LOG_TAG, "Cred-1");
+          keystore.load(getResources().openRawResource(R.raw.thomasmhardy_ebc515c808a6),
+                  "notasecret".toCharArray());
+          PrivateKey key = (PrivateKey) keystore.getKey("privatekey", "notasecret".toCharArray());
+          Log.i(LOG_TAG, "Cred0");
+          GoogleCredential credential = new GoogleCredential.Builder()
+                  .setTransport(httpTransport)
+                  .setJsonFactory(JSON_FACTORY)
+                  .setServiceAccountPrivateKey(key)
+                  .setServiceAccountId(SERVICE_ACCOUNT_EMAIL)
+                  .setServiceAccountScopes(Collections.singleton(STORAGE_SCOPE))
+                          // .setServiceAccountUser(SERVICE_ACCOUNT_EMAIL)
+                          // .setClientSecrets(CLIENT_ID, CLIENT_SECRET)
+                  .build();
+          credential.refreshToken();
+
+          String URI = "https://storage.googleapis.com/" + BUCKET_NAME;
+          Log.i(LOG_TAG, "Cred1");
+          HttpRequestFactory requestFactory = httpTransport.createRequestFactory(credential);
+          Log.i(LOG_TAG, "Cred2");
+          GenericUrl url = new GenericUrl(URI);
+          Log.i(LOG_TAG, "Cred3");
+          HttpRequest request = requestFactory.buildGetRequest(url);
+          Log.i(LOG_TAG, "Cred4");
+          HttpResponse response = request.execute();
+          Log.i(LOG_TAG, "Cred5");
+          String content = response.parseAsString();
+          Log.i(LOG_TAG, "response content is: " + content);
+          new Storage.Builder(httpTransport, JSON_FACTORY, credential)
+                  .setApplicationName("thomasmhardy").build();
+        } catch (KeyStoreException e) {
+          Log.e(LOG_TAG, "KeyStoreException: " + e.getMessage());
+        } catch (CertificateException e) {
+          Log.e(LOG_TAG, "CertificateException: " + e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+          Log.e(LOG_TAG, "NoSuchAlgorithmException: " + e.getMessage());
+        } catch (IOException e) {
+          Log.e(LOG_TAG, "IOException: " + e.getMessage());
+        } catch (UnrecoverableKeyException e) {
+          Log.e(LOG_TAG, "UnrecoverableKeyException: " + e.getMessage());
+        }
+
+
+
+
+
+
+
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = "http://storage.googleapis.com/thomasmhardy.appspot.com/" + file.getName();
+        String url = "http://www.googleapis.com" +
+                "/upload/storage/v1/b/" +
+                BUCKET_NAME +
+                "/o?uploadType=media&" +
+                "name=" + file.getName();
+        Log.i(LOG_TAG, "URL is: " + url);
         RequestParams params = new RequestParams();
         params.put("Content-Type", "binary/octet-stream");
         params.put("Content-Length", "" + file.length());
