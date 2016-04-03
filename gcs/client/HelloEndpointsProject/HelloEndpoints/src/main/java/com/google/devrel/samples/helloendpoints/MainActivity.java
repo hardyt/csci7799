@@ -38,6 +38,7 @@ import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.UrlEncodedContent;
 import com.google.api.client.json.JsonFactory;
 import com.loopj.android.http.*;
 import cz.msebera.android.httpclient.Header;
@@ -106,6 +107,7 @@ public class MainActivity extends Activity {
   private String STORAGE_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write";
   private JsonFactory JSON_FACTORY = new JacksonFactory();
   private HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
+  private String authorization = "";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -397,21 +399,23 @@ public class MainActivity extends Activity {
             // refresh credentials
             try {
               credential.refreshToken();
-              Log.i(LOG_TAG, "Cred35");
-              String URI = "https://storage.googleapis.com/" + BUCKET_NAME;
-              Log.i(LOG_TAG, "Cred36");
+              //String URI = "https://storage.googleapis.com/" + BUCKET_NAME;
+              String URI = "https://www.googleapis.com" +
+                      "/upload/storage/v1/b/" +
+                      BUCKET_NAME +
+                      "/o?uploadType=media&" +
+                      "name=" + file.getName();
               HttpRequestFactory requestFactory = httpTransport.createRequestFactory(credential);
-              Log.i(LOG_TAG, "Cred37");
               GenericUrl url = new GenericUrl(URI);
-              Log.i(LOG_TAG, "Cred38");
-              HttpRequest request = requestFactory.buildGetRequest(url);
-              Log.i(LOG_TAG, "Cred4");
+              //HttpRequest request = requestFactory.buildGetRequest(url);
+              HttpRequest request = requestFactory.buildPostRequest(url, new UrlEncodedContent(file));
               HttpResponse response = request.execute();
-              Log.i(LOG_TAG, "Cred5");
               String content = request.getHeaders().toString();
-              Log.i(LOG_TAG, "request content is: " + content);
+              Log.i(LOG_TAG, "request headers are: " + content);
+              authorization = request.getHeaders().getAuthorization().toString();
+              Log.i(LOG_TAG, "authorization is: " + authorization);
               content = response.parseAsString();
-              Log.i(LOG_TAG, "response content is: " + content);
+              Log.i(LOG_TAG, "response is: " + content);
               new Storage.Builder(httpTransport, JSON_FACTORY, credential)
                       .setApplicationName("thomasmhardy").build();
             } catch (IOException e) {
@@ -423,6 +427,7 @@ public class MainActivity extends Activity {
           @Override
           protected void onPostExecute(Void result){
             // Then run async post.
+            /*
             AsyncHttpClient client = new AsyncHttpClient();
             String url = "http://www.googleapis.com" +
                     "/upload/storage/v1/b/" +
@@ -433,12 +438,13 @@ public class MainActivity extends Activity {
             RequestParams params = new RequestParams();
             params.put("Content-Type", "binary/octet-stream");
             params.put("Content-Length", "" + file.length());
+            params.put("Authorization", authorization);
             try {
               params.put(file.getName(), file);
             } catch (FileNotFoundException e) {
               Log.e(LOG_TAG, "File not found. Whomp: " + e.getMessage());
             }
-            Log.i(LOG_TAG, "Cred2");
+            Log.i(LOG_TAG, "Params: " + params.toString());
             client.post(url, params, new AsyncHttpResponseHandler() {
 
               @Override
@@ -466,39 +472,10 @@ public class MainActivity extends Activity {
                 Log.i(LOG_TAG, "Retrying...");
               }
             });
+            */
           }
         }.execute();
-
-
-
-
-
-
-
-        /*
-        HttpPost httppost = new HttpPost(url);
-
-        FileBody filebody = new FileBody(file);
-
-        MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
-        multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-        multipartEntity.addPart("file", filebody);
-        httppost.setEntity(multipartEntity.build());
-        Log.i(LOG_TAG, "Executing request " + httppost.getRequestLine( ) );
-        try {
-          HttpResponse response = httpclient.execute( httppost );
-          Log.i(LOG_TAG, "Response: " + response.getStatusLine().toString());
-        } catch (ClientProtocolException e) {
-          e.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-
-        httpclient.getConnectionManager( ).shutdown( );
-        */
       };
-
-
     });
     filechooser.showDialog();
   }
