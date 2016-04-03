@@ -99,6 +99,14 @@ public class MainActivity extends Activity {
   private String mEmailAccount = "";
   private GreetingsDataAdapter listAdapter;
 
+  // for google credentials
+  private GoogleCredential credential = new GoogleCredential();
+  private String BUCKET_NAME = "thomasmhardy.appspot.com";
+  private String SERVICE_ACCOUNT_EMAIL = "helloendpointsexample@thomasmhardy.iam.gserviceaccount.com";
+  private String STORAGE_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write";
+  private JsonFactory JSON_FACTORY = new JacksonFactory();
+  private HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -346,15 +354,10 @@ public class MainActivity extends Activity {
         */
 
 
-        String BUCKET_NAME = "thomasmhardy.appspot.com";
-        String SERVICE_ACCOUNT_EMAIL = "helloendpointsexample@thomasmhardy.iam.gserviceaccount.com";
 
-        String STORAGE_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write";
-        JsonFactory JSON_FACTORY = new JacksonFactory();
+
 
         Log.i(LOG_TAG, "checking if I can create a credential");
-        HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
-        Log.i(LOG_TAG, "Cred-2");
         try {
           KeyStore keystore = KeyStore.getInstance("PKCS12");
           Log.i(LOG_TAG, "Cred-1");
@@ -362,7 +365,7 @@ public class MainActivity extends Activity {
                   "notasecret".toCharArray());
           PrivateKey key = (PrivateKey) keystore.getKey("privatekey", "notasecret".toCharArray());
           Log.i(LOG_TAG, "Cred0");
-          GoogleCredential credential = new GoogleCredential.Builder()
+          credential = new GoogleCredential.Builder()
                   .setTransport(httpTransport)
                   .setJsonFactory(JSON_FACTORY)
                   .setServiceAccountPrivateKey(key)
@@ -371,22 +374,6 @@ public class MainActivity extends Activity {
                           // .setServiceAccountUser(SERVICE_ACCOUNT_EMAIL)
                           // .setClientSecrets(CLIENT_ID, CLIENT_SECRET)
                   .build();
-          credential.refreshToken();
-
-          String URI = "https://storage.googleapis.com/" + BUCKET_NAME;
-          Log.i(LOG_TAG, "Cred1");
-          HttpRequestFactory requestFactory = httpTransport.createRequestFactory(credential);
-          Log.i(LOG_TAG, "Cred2");
-          GenericUrl url = new GenericUrl(URI);
-          Log.i(LOG_TAG, "Cred3");
-          HttpRequest request = requestFactory.buildGetRequest(url);
-          Log.i(LOG_TAG, "Cred4");
-          HttpResponse response = request.execute();
-          Log.i(LOG_TAG, "Cred5");
-          String content = response.parseAsString();
-          Log.i(LOG_TAG, "response content is: " + content);
-          new Storage.Builder(httpTransport, JSON_FACTORY, credential)
-                  .setApplicationName("thomasmhardy").build();
         } catch (KeyStoreException e) {
           Log.e(LOG_TAG, "KeyStoreException: " + e.getMessage());
         } catch (CertificateException e) {
@@ -399,54 +386,91 @@ public class MainActivity extends Activity {
           Log.e(LOG_TAG, "UnrecoverableKeyException: " + e.getMessage());
         }
 
+        // Everything is set to post the file.
 
-
-
-
-
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        String url = "http://www.googleapis.com" +
-                "/upload/storage/v1/b/" +
-                BUCKET_NAME +
-                "/o?uploadType=media&" +
-                "name=" + file.getName();
-        Log.i(LOG_TAG, "URL is: " + url);
-        RequestParams params = new RequestParams();
-        params.put("Content-Type", "binary/octet-stream");
-        params.put("Content-Length", "" + file.length());
-        try {
-          params.put(file.getName(), file);
-        } catch (FileNotFoundException e) {
-          Log.e(LOG_TAG, "File not found. Whomp: " + e.getMessage());
-        }
-        client.post(url, params, new AsyncHttpResponseHandler() {
+        new AsyncTask<Void, Void, Void>(){
 
           @Override
-          public void onStart() {
-            // called before request is started
-            Log.i(LOG_TAG, "Request starting...");
+          protected Void doInBackground(Void... params){
+            // First run an async credential update.
+            Log.i(LOG_TAG, "Cred3");
+            // refresh credentials
+            try {
+              credential.refreshToken();
+              Log.i(LOG_TAG, "Cred35");
+              String URI = "https://storage.googleapis.com/" + BUCKET_NAME;
+              Log.i(LOG_TAG, "Cred36");
+              HttpRequestFactory requestFactory = httpTransport.createRequestFactory(credential);
+              Log.i(LOG_TAG, "Cred37");
+              GenericUrl url = new GenericUrl(URI);
+              Log.i(LOG_TAG, "Cred38");
+              HttpRequest request = requestFactory.buildGetRequest(url);
+              Log.i(LOG_TAG, "Cred4");
+              HttpResponse response = request.execute();
+              Log.i(LOG_TAG, "Cred5");
+              String content = request.getHeaders().toString();
+              Log.i(LOG_TAG, "request content is: " + content);
+              content = response.parseAsString();
+              Log.i(LOG_TAG, "response content is: " + content);
+              new Storage.Builder(httpTransport, JSON_FACTORY, credential)
+                      .setApplicationName("thomasmhardy").build();
+            } catch (IOException e) {
+              Log.e(LOG_TAG, "IOException: " + e.getMessage());
+            }
+            return null;
           }
 
           @Override
-          public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-            // called when response HTTP status is "200 OK"
-            Log.i(LOG_TAG, "Success: " + response.toString());
-          }
+          protected void onPostExecute(Void result){
+            // Then run async post.
+            AsyncHttpClient client = new AsyncHttpClient();
+            String url = "http://www.googleapis.com" +
+                    "/upload/storage/v1/b/" +
+                    BUCKET_NAME +
+                    "/o?uploadType=media&" +
+                    "name=" + file.getName();
+            Log.i(LOG_TAG, "URL is: " + url);
+            RequestParams params = new RequestParams();
+            params.put("Content-Type", "binary/octet-stream");
+            params.put("Content-Length", "" + file.length());
+            try {
+              params.put(file.getName(), file);
+            } catch (FileNotFoundException e) {
+              Log.e(LOG_TAG, "File not found. Whomp: " + e.getMessage());
+            }
+            Log.i(LOG_TAG, "Cred2");
+            client.post(url, params, new AsyncHttpResponseHandler() {
 
-          @Override
-          public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-            Log.e(LOG_TAG, "Status code: " + statusCode + " Headers: " + headers.toString() +
-                    " Error response: " + errorResponse.toString() + " Exception: " + e.getMessage());
-          }
+              @Override
+              public void onStart() {
+                // called before request is started
+                Log.i(LOG_TAG, "Request starting...");
+              }
 
-          @Override
-          public void onRetry(int retryNo) {
-            // called when request is retried
-            Log.i(LOG_TAG, "Retrying...");
+              @Override
+              public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                // called when response HTTP status is "200 OK"
+                Log.i(LOG_TAG, "Success: " + response.toString());
+              }
+
+              @Override
+              public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                Log.e(LOG_TAG, "Status code: " + statusCode + " Headers: " + headers.toString() +
+                        " Error response: " + errorResponse.toString() + " Exception: " + e.getMessage());
+              }
+
+              @Override
+              public void onRetry(int retryNo) {
+                // called when request is retried
+                Log.i(LOG_TAG, "Retrying...");
+              }
+            });
           }
-        });
+        }.execute();
+
+
+
 
 
 
