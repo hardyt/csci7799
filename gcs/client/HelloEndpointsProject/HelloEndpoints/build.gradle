@@ -17,70 +17,50 @@ repositories {
 }
 
 dependencies {
-    compile('com.android.support:support-v4:13.0+') {
-        exclude(module: 'httpclient') //by artifact name
-    }
+    compile 'com.android.support:support-v4:13.0.+'
+
     // BEGIN Google APIs
+
     // Play Services will validate the application prior to allowing OAuth2 access.
-    compile('com.google.android.gms:play-services:3.2.25') {
-        exclude(module: 'httpclient') //by artifact name
-    }
+    compile(group: 'com.google.android.gms', name: 'play-services', version: '3.2.25')
+
     // The following lines implement maven imports as defined at:
     // https://code.google.com/p/google-api-java-client/wiki/Setup
+
     // Add the Google API client library.
-    compile('com.google.api-client:google-api-client:1.17.0-rc') {
+    compile(group: 'com.google.api-client', name: 'google-api-client', version: '1.17.0-rc') {
         // Exclude artifacts that the Android SDK/Runtime provides.
         exclude(group: 'xpp3', module: 'xpp3')
-        exclude(module: 'httpclient') //by artifact name
         exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
-        exclude(group: 'org.apache.httpcomponents', module: 'httpclient-cache')
-        exclude(group: 'org.apache.httpcomponents', module: 'httpcore')
-        exclude(group: 'org.apache.httpcomponents', module: 'httpasyncclient')
-        exclude(group: 'org.apache.httpcomponents', module: 'httpmime')
         exclude(group: 'junit', module: 'junit')
         exclude(group: 'com.google.android', module: 'android')
     }
-    // compile 'com.google.http-client:google-http-client-jackson2:1.20.0'
-    // compile 'com.google.apis:google-api-services-storage:v1-rev33-1.20.0'
+
     // Add the Android extensions for the Google API client library.
     // This will automatically include play services as long as you have download that library
     // from the Android SDK manager.
     // Add the Android extensions for the Google API client library.
-    compile('com.google.api-client:google-api-client-android:1.17.0-rc') {
+    compile(group: 'com.google.api-client', name: 'google-api-client-android',
+            version: '1.17.0-rc') {
         // Exclude play services. Explicitly include it above after you have installed Play
         // services from the Android SDK manager.
-        exclude(module: 'httpclient') //by artifact name
         exclude(group: 'com.google.android.google-play-services', module: 'google-play-services')
     }
+
     // END Google APIs
+
     // The following client libraries make HTTP/JSON on Android easier.
+
     // Android extensions for Google HTTP Client.
-    /*
-    compile('com.google.http-client:google-http-client-android:1.17.0-rc') {
+    compile(group: 'com.google.http-client', name: 'google-http-client-android',
+            version: '1.17.0-rc') {
         exclude(group: 'com.google.android', module: 'android')
     }
-    */
-
-    compile 'org.apache.httpcomponents:httpclient-cache:4.5.2'
-    compile 'org.apache.httpcomponents:httpcore:4.4.4'
-    compile 'org.apache.httpcomponents:httpclient:4.5.2'
-    compile 'org.apache.httpcomponents:httpasyncclient:4.1.1'
-    compile 'org.apache.httpcomponents:httpmime:4.5.2'
-    /*
-    compile('org.apache.httpcomponents:httpmime:4.5.2') {
-        exclude module: "httpcore"
-        exclude module: "httpclient-android"
-    }
-    */
 
     // This is used by the Google HTTP client library.
-    compile('com.google.guava:guava:18.0') {
-        exclude(module: 'httpclient') //by artifact name
-    }
-
-
-    //compile 'org.json:json:20140107'
-
+    compile(group: 'com.google.guava', name: 'guava', version: '14.0.+')
+    compile files('libs/android-async-http-1.4.9.jar')
+    compile files('libs/httpclient-4.3.6.jar')
 }
 
 android {
@@ -90,13 +70,6 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 21
-    }
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
     }
 }
 

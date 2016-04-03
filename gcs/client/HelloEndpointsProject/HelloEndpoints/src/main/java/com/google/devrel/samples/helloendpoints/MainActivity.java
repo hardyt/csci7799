@@ -31,32 +31,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpEntity;
-import org.apache.http.concurrent.FutureCallback;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.entity.mime.content.ByteArrayBody;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-
-import org.apache.http.nio.client.methods.AsyncCharConsumer;
-import org.apache.http.nio.client.methods.HttpAsyncMethods;
-import org.apache.http.nio.protocol.HttpAsyncRequestProducer;
-import org.json.JSONObject;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
-import org.apache.http.impl.nio.client.HttpAsyncClients;
-import java.nio.CharBuffer;
-import org.apache.http.nio.IOControl;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.conn.util.PublicSuffixMatcherLoader;
+import com.loopj.android.http.*;
+import cz.msebera.android.httpclient.Header;
 
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -73,16 +49,14 @@ import com.appspot.your_app_id.helloworld.model.HelloGreetingCollection;
 import com.google.common.base.Strings;
 
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import java.io.File;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+
 
 import com.google.devrel.samples.helloendpoints.R.id;
 
@@ -354,117 +328,45 @@ public class MainActivity extends Activity {
         Log.i(LOG_TAG, "Done with upload: " + greeting.getMessage());
         */
 
-        CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault();
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = "http://storage.googleapis.com/thomasmhardy.appspot.com/" + file.getName();
+        RequestParams params = new RequestParams();
+        params.put("Content-Type", "binary/octet-stream");
+        params.put("Content-Length", "" + file.length());
         try {
-          // Start the client
-          httpclient.start();
-
-          // Execute request
-          String url = "http://storage.googleapis.com/thomasmhardy.appspot.com/" + file.getName();
-          final HttpPost request1 = new HttpPost(url);
-          request1.addHeader("Content-Type", "binary/octet-stream");
-          request1.addHeader("Content-Length", "" + file.length());
-          Future<HttpResponse> future = httpclient.execute(request1, null);
-          // and wait until a response is received
-          try {
-            HttpResponse response1 = future.get();
-            Log.i(LOG_TAG, request1.getRequestLine() + "->" + response1.getStatusLine());
-          } catch (ExecutionException e) {
-            Log.e(LOG_TAG, "ExecutionException: " + e.getMessage());
-          } catch (InterruptedException e) {
-            Log.e(LOG_TAG, "InterruptedException: " + e.getMessage());
-          }
-          /*
-          // One most likely would want to use a callback for operation result
-          final CountDownLatch latch1 = new CountDownLatch(1);
-          final HttpGet request2 = new HttpGet("http://www.apache.org/");
-          httpclient.execute(request2, new FutureCallback<HttpResponse>() {
-
-            public void completed(final HttpResponse response2) {
-              latch1.countDown();
-              System.out.println(request2.getRequestLine() + "->" + response2.getStatusLine());
-            }
-
-            public void failed(final Exception ex) {
-              latch1.countDown();
-              System.out.println(request2.getRequestLine() + "->" + ex);
-            }
-
-            public void cancelled() {
-              latch1.countDown();
-              System.out.println(request2.getRequestLine() + " cancelled");
-            }
-
-          });
-          try {
-            latch1.await();
-          } catch (Exception e) {
-            //
-          }
-          */
-
-          /*
-          // In real world one most likely would also want to stream
-          // request and response body content
-          final CountDownLatch latch2 = new CountDownLatch(1);
-          final HttpGet request3 = new HttpGet("http://www.apache.org/");
-          HttpAsyncRequestProducer producer3 = HttpAsyncMethods.create(request3);
-          AsyncCharConsumer<HttpResponse> consumer3 = new AsyncCharConsumer<HttpResponse>() {
-
-            HttpResponse response;
-
-            @Override
-            protected void onResponseReceived(final HttpResponse response) {
-              this.response = response;
-            }
-
-            @Override
-            protected void onCharReceived(final CharBuffer buf, final IOControl ioctrl) throws IOException {
-              // Do something useful
-            }
-
-            @Override
-            protected void releaseResources() {
-            }
-
-            @Override
-            protected HttpResponse buildResult(final HttpContext context) {
-              return this.response;
-            }
-
-          };
-
-          httpclient.execute(producer3, consumer3, new FutureCallback<HttpResponse>() {
-
-            public void completed(final HttpResponse response3) {
-              latch2.countDown();
-              System.out.println(request2.getRequestLine() + "->" + response3.getStatusLine());
-            }
-
-            public void failed(final Exception ex) {
-              latch2.countDown();
-              System.out.println(request2.getRequestLine() + "->" + ex);
-            }
-
-            public void cancelled() {
-              latch2.countDown();
-              System.out.println(request2.getRequestLine() + " cancelled");
-            }
-
-          });
-          try {
-            latch2.await();
-          } catch (Exception e) {
-            //
-          }
-          */
-
-        } finally {
-          try {
-            httpclient.close();
-          } catch (IOException e) {
-          }
+          params.put(file.getName(), file);
+        } catch (FileNotFoundException e) {
+          Log.e(LOG_TAG, "File not found. Whomp: " + e.getMessage());
         }
+        client.post(url, params, new AsyncHttpResponseHandler() {
+
+          @Override
+          public void onStart() {
+            // called before request is started
+            Log.i(LOG_TAG, "Request starting...");
+          }
+
+          @Override
+          public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+            // called when response HTTP status is "200 OK"
+            Log.i(LOG_TAG, "Success: " + response.toString());
+          }
+
+          @Override
+          public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+            Log.e(LOG_TAG, "Status code: " + statusCode + " Headers: " + headers.toString() +
+                    " Error response: " + errorResponse.toString() + " Exception: " + e.getMessage());
+          }
+
+          @Override
+          public void onRetry(int retryNo) {
+            // called when request is retried
+            Log.i(LOG_TAG, "Retrying...");
+          }
+        });
+
 
 
 
