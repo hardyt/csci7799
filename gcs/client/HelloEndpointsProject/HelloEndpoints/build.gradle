@@ -17,12 +17,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:13.0.+'
     // BEGIN Google APIs
     // Play Services will validate the application prior to allowing OAuth2 access.
-    compile('com.google.android.gms:play-services:3.2.25') {
-        exclude group: 'com.google.guava'
-    }
     // The following lines implement maven imports as defined at:
     // https://code.google.com/p/google-api-java-client/wiki/Setup
     // Add the Google API client library.
@@ -49,23 +45,20 @@ dependencies {
         exclude(group: 'com.google.android', module: 'android')
     }
     // This is used by the Google HTTP client library.
-    compile 'com.google.http-client:google-http-client-jackson2:1.15.0-rc'
-    compile 'com.google.apis:google-api-services-storage:v1-rev66-1.21.0'
     compile files('libs/android-async-http-1.4.9.jar')
     compile files('libs/httpclient-4.3.6.jar')
+    compile 'com.android.support:support-v4:24.0.0-alpha1'
+    compile 'com.google.android.gms:play-services-identity:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.http-client:google-http-client-jackson2:1.15.0-rc'
+    compile 'com.google.apis:google-api-services-storage:v1-rev66-1.21.0'
+    compile project(path: ':backend', configuration: 'android-endpoints')
+
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
-
-    defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 21
-        multiDexEnabled true
-        versionCode 1
-        versionName "1.0"
-    }
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
 
 
     signingConfigs {
@@ -74,20 +67,6 @@ android {
             storePassword('123456');
             keyAlias 'thomasmhardyalias';
             keyPassword '123456';
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            debuggable false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            signingConfig signingConfigs.releaseConfig
-        }
-
-        debug {
-            debuggable true
-            applicationIdSuffix ".debug"
         }
     }
 
@@ -103,6 +82,32 @@ android {
         }
     }
 
+
     sourceSets { labFlavor { res.srcDirs = ['src/labFlavor/res', 'src/labFlavor/res/layout'] } }
+    sourceSets { pcpFlavor { res.srcDirs = ['src/pcpFlavor/res', 'src/pcpFlavor/res/layout'] } }
+    sourceSets { patientFlavor { res.srcDirs = ['src/patientFlavor/res', 'src/patientFlavor/res/layout'] } }
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 23
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.releaseConfig
+        }
+
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+    }
 }
 
+apply plugin: 'com.google.gms.google-services'

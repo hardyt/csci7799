@@ -31,6 +31,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.iid.InstanceID;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.auth.oauth2.TokenResponseException;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -97,6 +100,7 @@ import static com.google.devrel.samples.helloendpoints.BuildConfig.DEBUG;
  *
  */
 public class MainActivity extends Activity {
+  private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
   private static final String LOG_TAG = "MainActivity";
 
   /**
@@ -132,9 +136,6 @@ public class MainActivity extends Activity {
     listView.setAdapter(listAdapter);
     */
 
-    // Get Google Account credentials
-    onClickSignIn(MainActivity.this.findViewById(id.email_address_tv));
-
     TextView topTitleTV = (TextView) MainActivity.this.findViewById(id.top_title_tv);
     if(Constants.type == Constants.Type.PATIENT) {
       topTitleTV.setText("Patient App");
@@ -145,6 +146,34 @@ public class MainActivity extends Activity {
     } else {
       topTitleTV.setText("Unknown App");
     }
+
+    // Get Google Account credentials
+    onClickSignIn(MainActivity.this.findViewById(id.email_address_tv));
+
+    if (checkPlayServices()) {
+      // Start IntentService to register this application with GCM.
+      Intent intent = new Intent(this, RegistrationIntentService.class);
+      startService(intent);
+      Log.i(LOG_TAG, "Should have gotten a token.");
+    } else {
+      Log.i(LOG_TAG, "Play services not available.");
+    }
+  }
+
+  private boolean checkPlayServices() {
+    GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+    int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+    if (resultCode != ConnectionResult.SUCCESS) {
+      if (apiAvailability.isUserResolvableError(resultCode)) {
+        apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                .show();
+      } else {
+        Log.i(LOG_TAG, "This device is not supported.");
+        finish();
+      }
+      return false;
+    }
+    return true;
   }
 
   @Override

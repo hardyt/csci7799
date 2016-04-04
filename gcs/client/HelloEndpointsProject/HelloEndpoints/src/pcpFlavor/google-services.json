@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "thomasmhardy",
+    "project_number": "582351471583",
+    "name": "thomasmhardy"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582351471583:android:163262d3e9ccf088",
+        "client_id": "android:com.google.devrel.samples.helloendpoints.pcp.debug",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.google.devrel.samples.helloendpoints.pcp.debug",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582351471583-6d4guctpvjh2a3n3fhn0qmg79alv3uck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.devrel.samples.helloendpoints.pcp.debug",
+            "certificate_hash": "6B3D6B31CA8114A0984A89F21655AB8D0E8B3AA4"
+          }
+        },
+        {
+          "client_id": "582351471583-mletrplmqgqu0k2ht1oni6kddorajf92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

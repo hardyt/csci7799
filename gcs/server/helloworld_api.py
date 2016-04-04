@@ -12,6 +12,8 @@ from protorpc import remote
 
 from google.appengine.ext import db
 
+from gae_python_gcm.gcm import GCMMessage, GCMConnection
+
 # TODO: Replace the following lines with client IDs obtained from the APIs
 # Console or Cloud Console.
 WEB_CLIENT_ID = '582351471583-mletrplmqgqu0k2ht1oni6kddorajf92.apps.googleusercontent.com'
@@ -85,10 +87,15 @@ class HelloWorldApi(remote.Service):
                       name='greetings.getGreeting')
     def greeting_get(self, request):
         try:
-            if(request.id!=99):
-                return STORED_GREETINGS.items[request.id]
-            else:
-                return Greeting(message=blobstore.create_upload_url('/upload_file'))
+            push_token = 'YOUR_PUSH_TOKEN'
+            android_payload = {'your-key': 'your-value'}
+            gcm_message = GCMMessage(push_token, android_payload)
+            gcm_conn = GCMConnection()
+            gcm_conn.notify_device(gcm_message)
+            #if(request.id!=99):
+            return STORED_GREETINGS.items[request.id]
+            #else:
+            #   return Greeting(message=blobstore.create_upload_url('/upload_file'))
         except (IndexError, TypeError):
             raise endpoints.NotFoundException('Greeting %s not found.' %
                                               (request.id,))

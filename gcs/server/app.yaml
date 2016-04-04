@@ -13,6 +13,13 @@ libraries:
   version: 1.0
 - name: webapp2
   version: latest
+
+builtins:
+- remote_api: on
+
+inbound_services:
+- warmup
+
   
 handlers:
 
