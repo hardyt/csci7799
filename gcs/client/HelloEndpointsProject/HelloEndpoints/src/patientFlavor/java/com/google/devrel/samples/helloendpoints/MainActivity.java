@@ -126,9 +126,25 @@ public class MainActivity extends Activity {
     // Prevent the keyboard from being visible upon startup.
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+    /*
     ListView listView = (ListView)this.findViewById(R.id.greetings_list_view);
     listAdapter = new GreetingsDataAdapter((Application)this.getApplication());
     listView.setAdapter(listAdapter);
+    */
+
+    // Get Google Account credentials
+    onClickSignIn(MainActivity.this.findViewById(id.email_address_tv));
+
+    TextView topTitleTV = (TextView) MainActivity.this.findViewById(id.top_title_tv);
+    if(Constants.type == Constants.Type.PATIENT) {
+      topTitleTV.setText("Patient App");
+    } else if (Constants.type == Constants.Type.PCP) {
+      topTitleTV.setText("Provider App");
+    } else if (Constants.type == Constants.Type.LAB) {
+      topTitleTV.setText("Ancillary App");
+    } else {
+      topTitleTV.setText("Unknown App");
+    }
   }
 
   @Override
@@ -154,7 +170,7 @@ public class MainActivity extends Activity {
       emailAccountTextView.setText(accountName);
 
       // Fire off the authorization check for this account and OAuth2 scopes.
-      performAuthCheck(accountName);
+      performAuthCheck("Logged in as: " + accountName);
     }
   }
 
@@ -170,6 +186,7 @@ public class MainActivity extends Activity {
    * This method is invoked when the "Get Greeting" button is clicked. See activity_main.xml for
    * the dynamic reference to this method.
    */
+  /*
   public void onClickGetGreeting(View view) {
     View rootView = view.getRootView();
     TextView greetingIdInputTV = (TextView)rootView.findViewById(R.id.greeting_id_edit_text);
@@ -214,6 +231,7 @@ public class MainActivity extends Activity {
 
     getAndDisplayGreeting.execute(greetingId);
   }
+  */
 
   /**
    * This method is invoked when the "List Greetings" button is clicked. See activity_main.xml for
@@ -261,10 +279,12 @@ public class MainActivity extends Activity {
       @Override
       public void fileSelected(final File file) {
         // do something with the file
+        /*
         HelloGreeting greeting = new HelloGreeting();
         greeting.setMessage(file.getAbsolutePath());
         displayGreetings(greeting);
         Log.i(LOG_TAG, "Finished list.");
+        */
 
         // List files - not implemented yet
 
@@ -352,7 +372,7 @@ public class MainActivity extends Activity {
         new AsyncTask<Void, Void, GoogleCredential>(){
 
           @Override
-          protected GoogleCredential doInBackground(Void... unused) {
+          protected GoogleCredential doInBackground(Void... view) {
             // First run an async credential update.
             Log.i(LOG_TAG, "Cred3");
             // refresh credentials
@@ -422,6 +442,7 @@ public class MainActivity extends Activity {
    * for the dynamic reference to this method.
    */
 
+  /*
   public void onClickSendGreetings(View view) {
     View rootView = view.getRootView();
 
@@ -479,6 +500,7 @@ public class MainActivity extends Activity {
 
     sendGreetings.execute((Void)null);
   }
+  */
 
   /**
    * This method is invoked when the "Get Authenticated Greeting" button is clicked. See
@@ -571,7 +593,7 @@ public class MainActivity extends Activity {
       Account[] accounts = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
       if (accounts != null && accounts.length > 0) {
         // Select account and perform authorization check.
-        emailAddressTV.setText(accounts[0].name);
+        emailAddressTV.setText("Logged in as: " + accounts[0].name);
         mEmailAccount = accounts[0].name;
         performAuthCheck(accounts[0].name);
       }

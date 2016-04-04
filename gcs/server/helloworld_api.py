@@ -10,7 +10,7 @@ from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from google.appengine.ext import blobstore
+from google.appengine.ext import db
 
 # TODO: Replace the following lines with client IDs obtained from the APIs
 # Console or Cloud Console.
@@ -21,6 +21,17 @@ ANDROID_AUDIENCE = WEB_CLIENT_ID
 
 
 package = 'Hello'
+
+
+#The Datastore class to store HR-XML Resumes.
+class resumeXML(db.Model):
+	name = db.StringProperty()
+	id = db.StringProperty()
+	resumeDate = db.DateTimeProperty()
+	blobXML = db.BlobProperty()
+	blobImage = db.BlobProperty()
+	blobImageContentType = db.StringProperty()
+	dateAdded = db.DateTimeProperty(auto_now_add=True)
 
 
 class Greeting(messages.Message):

@@ -18,52 +18,39 @@ repositories {
 
 dependencies {
     compile 'com.android.support:support-v4:13.0.+'
-
     // BEGIN Google APIs
-
     // Play Services will validate the application prior to allowing OAuth2 access.
-    compile(group: 'com.google.android.gms', name: 'play-services', version: '3.2.25') {
+    compile('com.google.android.gms:play-services:3.2.25') {
         exclude group: 'com.google.guava'
     }
-
     // The following lines implement maven imports as defined at:
     // https://code.google.com/p/google-api-java-client/wiki/Setup
-
     // Add the Google API client library.
-    compile(group: 'com.google.api-client', name: 'google-api-client', version: '1.17.0-rc') {
+    compile('com.google.api-client:google-api-client:1.17.0-rc') {
         // Exclude artifacts that the Android SDK/Runtime provides.
         exclude(group: 'xpp3', module: 'xpp3')
         exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
         exclude(group: 'junit', module: 'junit')
         exclude(group: 'com.google.android', module: 'android')
     }
-
     // Add the Android extensions for the Google API client library.
     // This will automatically include play services as long as you have download that library
     // from the Android SDK manager.
     // Add the Android extensions for the Google API client library.
-    compile(group: 'com.google.api-client', name: 'google-api-client-android',
-            version: '1.17.0-rc') {
+    compile('com.google.api-client:google-api-client-android:1.17.0-rc') {
         // Exclude play services. Explicitly include it above after you have installed Play
         // services from the Android SDK manager.
         exclude(group: 'com.google.android.google-play-services', module: 'google-play-services')
     }
-
     // END Google APIs
-
     // The following client libraries make HTTP/JSON on Android easier.
-
     // Android extensions for Google HTTP Client.
-    compile(group: 'com.google.http-client', name: 'google-http-client-android',
-            version: '1.17.0-rc') {
+    compile('com.google.http-client:google-http-client-android:1.17.0-rc') {
         exclude(group: 'com.google.android', module: 'android')
     }
-
     // This is used by the Google HTTP client library.
-
-    compile('com.google.http-client:google-http-client-jackson2:1.15.0-rc')
-    compile('com.google.apis:google-api-services-storage:v1-rev66-1.21.0')
-
+    compile 'com.google.http-client:google-http-client-jackson2:1.15.0-rc'
+    compile 'com.google.apis:google-api-services-storage:v1-rev66-1.21.0'
     compile files('libs/android-async-http-1.4.9.jar')
     compile files('libs/httpclient-4.3.6.jar')
 }
@@ -76,6 +63,46 @@ android {
         minSdkVersion 8
         targetSdkVersion 21
         multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
     }
+
+
+    signingConfigs {
+        releaseConfig {
+            storeFile file('gradlekeystore.jks');
+            storePassword('123456');
+            keyAlias 'thomasmhardyalias';
+            keyPassword '123456';
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.releaseConfig
+        }
+
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+    }
+
+    productFlavors {
+        labFlavor {
+            applicationId 'com.google.devrel.samples.helloendpoints.lab'
+        }
+        pcpFlavor {
+            applicationId 'com.google.devrel.samples.helloendpoints.pcp'
+        }
+        patientFlavor {
+            applicationId 'com.google.devrel.samples.helloendpoints.patient'
+        }
+    }
+
+    sourceSets { labFlavor { res.srcDirs = ['src/labFlavor/res', 'src/labFlavor/res/layout'] } }
 }
 
