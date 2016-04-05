@@ -31,6 +31,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.auth.oauth2.TokenResponseException;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -97,6 +99,7 @@ import static com.google.devrel.samples.helloendpoints.BuildConfig.DEBUG;
  *
  */
 public class MainActivity extends Activity {
+  private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
   private static final String LOG_TAG = "MainActivity";
 
   /**
@@ -145,6 +148,30 @@ public class MainActivity extends Activity {
     } else {
       topTitleTV.setText("Unknown App");
     }
+
+    Log.i(LOG_TAG, "Attempting to get a registration ID.");
+    if (checkPlayServices()) {
+      // Start IntentService to register this application with GCM.
+      Intent intent = new Intent(this, RegistrationIntentService.class);
+      startService(intent);
+
+    }
+  }
+
+  private boolean checkPlayServices() {
+    GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+    int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+    if (resultCode != ConnectionResult.SUCCESS) {
+      if (apiAvailability.isUserResolvableError(resultCode)) {
+        apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                .show();
+      } else {
+        Log.i(LOG_TAG, "This device is not supported.");
+        finish();
+      }
+      return false;
+    }
+    return true;
   }
 
   @Override

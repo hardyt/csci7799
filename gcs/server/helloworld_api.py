@@ -4,6 +4,7 @@ Defined here are the ProtoRPC messages needed to define Schemas for methods
 as well as those methods defined in an API.
 """
 
+import os
 
 import endpoints
 from protorpc import messages
@@ -87,7 +88,7 @@ class HelloWorldApi(remote.Service):
                       name='greetings.getGreeting')
     def greeting_get(self, request):
         try:
-            push_token = 'YOUR_PUSH_TOKEN'
+            push_token = 'fgNBT_sTMpY:APA91bENb19i747bzDg2bh4AM7L92rLryARyM4_rf_dZiFsFi0wSUGnWZvTu_wYSMoNS_Ezl8zT3kxY0GbgUbGTlbtkjpw3Yy28HLu6X4pjI6f4sPfNO8O-GqtY8BsSNy7BpTQ4RAwxA'
             android_payload = {'your-key': 'your-value'}
             gcm_message = GCMMessage(push_token, android_payload)
             gcm_conn = GCMConnection()

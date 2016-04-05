@@ -39,7 +39,7 @@
       <root url="file://C:/Program Files (x86)/Google/google_appengine/lib/sqlcmd" />
       <root url="file://C:/Program Files (x86)/Google/google_appengine/lib/uritemplate" />
       <root url="file://C:/Program Files (x86)/Google/google_appengine/lib/websocket" />
-      <root url="file://C:/Program Files (x86)/Google/google_appengine/lib/django_1_2" />
+      <root url="file://C:/Program Files (x86)/Google/google_appengine/lib/django-1.5" />
       <root url="file://C:/Program Files (x86)/Google/google_appengine/lib/webapp2-2.5.2" />
       <root url="file://C:/Program Files (x86)/Google/google_appengine/lib/webob-1.2.3" />
       <root url="file://C:/Program Files (x86)/Google/google_appengine/lib/yaml-3.10" />

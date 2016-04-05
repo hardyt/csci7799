@@ -7,10 +7,10 @@
 # Greg Bayer <greg@gbayer.com>
 ################################################################################
 
-from datetime import datetime, timedelta
 import logging
-import re
-import urllib, urllib2
+import urllib2
+from datetime import datetime, timedelta
+
 try:
     import json
 except ImportError:

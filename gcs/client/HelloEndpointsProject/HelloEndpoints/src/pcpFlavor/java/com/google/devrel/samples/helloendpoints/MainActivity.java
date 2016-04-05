@@ -130,11 +130,11 @@ public class MainActivity extends Activity {
     // Prevent the keyboard from being visible upon startup.
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-    /*
+
     ListView listView = (ListView)this.findViewById(R.id.greetings_list_view);
     listAdapter = new GreetingsDataAdapter((Application)this.getApplication());
     listView.setAdapter(listAdapter);
-    */
+
 
     TextView topTitleTV = (TextView) MainActivity.this.findViewById(id.top_title_tv);
     if(Constants.type == Constants.Type.PATIENT) {
@@ -150,13 +150,11 @@ public class MainActivity extends Activity {
     // Get Google Account credentials
     onClickSignIn(MainActivity.this.findViewById(id.email_address_tv));
 
+    Log.i(LOG_TAG, "Attempting to get a registration ID.");
     if (checkPlayServices()) {
       // Start IntentService to register this application with GCM.
       Intent intent = new Intent(this, RegistrationIntentService.class);
       startService(intent);
-      Log.i(LOG_TAG, "Should have gotten a token.");
-    } else {
-      Log.i(LOG_TAG, "Play services not available.");
     }
   }
 
@@ -215,7 +213,7 @@ public class MainActivity extends Activity {
    * This method is invoked when the "Get Greeting" button is clicked. See activity_main.xml for
    * the dynamic reference to this method.
    */
-  /*
+
   public void onClickGetGreeting(View view) {
     View rootView = view.getRootView();
     TextView greetingIdInputTV = (TextView)rootView.findViewById(R.id.greeting_id_edit_text);
@@ -260,7 +258,6 @@ public class MainActivity extends Activity {
 
     getAndDisplayGreeting.execute(greetingId);
   }
-  */
 
   /**
    * This method is invoked when the "List Greetings" button is clicked. See activity_main.xml for
@@ -471,7 +468,7 @@ public class MainActivity extends Activity {
    * for the dynamic reference to this method.
    */
 
-  /*
+
   public void onClickSendGreetings(View view) {
     View rootView = view.getRootView();
 
@@ -529,7 +526,7 @@ public class MainActivity extends Activity {
 
     sendGreetings.execute((Void)null);
   }
-  */
+
 
   /**
    * This method is invoked when the "Get Authenticated Greeting" button is clicked. See

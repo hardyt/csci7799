@@ -6,7 +6,7 @@ threadsafe: false
 
 libraries:
 - name: django
-  version: "1.2"
+  version: latest
 - name: pycrypto
   version: latest
 - name: endpoints
@@ -54,9 +54,6 @@ handlers:
 # Endpoints handler: Must be /_ah/spi. Apps send requests to /_ah/api, but these are handled at /_ah/spi!!
 - url: /_ah/spi/.*
   script: helloworld_api.APPLICATION
-- url: /_ah/upload/.*
-  script: serve.app
-  login: required
 
 - url: /js
   static_dir: static/js
@@ -64,4 +61,7 @@ handlers:
   static_dir: static/bootstrap
 - url: /
   static_files: templates/index.html
-  upload: templates/index\.html  
+  upload: templates/index\.html
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'settings'
