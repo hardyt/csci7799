@@ -34,10 +34,11 @@ except:
 
 GOOGLE_LOGIN_URL = 'https://www.google.com/accounts/ClientLogin'
 # Can't use https on localhost due to Google cert bug
-GOOGLE_GCM_SEND_URL = 'http://android.apis.google.com/gcm/send' if LOCALHOST \
-else 'https://android.apis.google.com/gcm/send'
-GOOGLE_GCM_SEND_URL = 'http://android.googleapis.com/gcm/send' if LOCALHOST \
-else 'https://android.googleapis.com/gcm/send'
+#GOOGLE_GCM_SEND_URL = 'http://android.apis.google.com/gcm/send' if LOCALHOST \
+#else 'https://android.apis.google.com/gcm/send'
+#GOOGLE_GCM_SEND_URL = 'http://android.googleapis.com/gcm/send' if LOCALHOST \
+#else 'https://android.googleapis.com/gcm/send'
+GOOGLE_GCM_SEND_URL = 'https://gcm-http.googleapis.com/gcm/send'
 
 GCM_QUEUE_NAME = 'gcm-retries'
 GCM_QUEUE_CALLBACK_URL = '/gae_python_gcm/send_request'

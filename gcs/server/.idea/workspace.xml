@@ -2,18 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6cf0f5c5-c903-4fc9-976a-8b6a1c943446" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/patientFlavor/java/com/google/devrel/samples/helloendpoints/MainActivity.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/patientFlavor/java/com/google/devrel/samples/helloendpoints/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/pcpFlavor/java/com/google/devrel/samples/helloendpoints/MainActivity.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/pcpFlavor/java/com/google/devrel/samples/helloendpoints/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/pcpFlavor/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/pcpFlavor/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Google_App_Engine_SDK.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Google_App_Engine_SDK.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gae_python_gcm/urls.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gae_python_gcm/views.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.yaml" afterPath="$PROJECT_DIR$/app.yaml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gae_python_gcm/gcm.py" afterPath="$PROJECT_DIR$/gae_python_gcm/gcm.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/helloworld_api.py" afterPath="$PROJECT_DIR$/helloworld_api.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/pcpFlavor/java/com/google/devrel/samples/helloendpoints/MyGcmListenerService.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/main/java/com/google/devrel/samples/helloendpoints/MyGcmListenerService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/pcpFlavor/java/com/google/devrel/samples/helloendpoints/MyInstanceIDListenerService.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/main/java/com/google/devrel/samples/helloendpoints/MyInstanceIDListenerService.java" />
     </list>
     <ignored path="server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,13 +28,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="helloworld_api.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="helloworld_api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/helloworld_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-675">
-              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+            <state relative-caret-position="353">
+              <caret line="88" column="23" selection-start-line="88" selection-start-column="21" selection-end-line="88" selection-end-column="23" />
               <folding>
                 <element signature="e#187#196#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gae_python_gcm/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+              <folding>
+                <element signature="e#205#223#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gae_python_gcm/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="46" column="25" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
+              <folding>
+                <element signature="e#220#234#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,8 +121,8 @@
       <file leaf-file-name="gcm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gae_python_gcm/gcm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="24" column="69" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="69" />
+            <state relative-caret-position="418">
+              <caret line="228" column="36" selection-start-line="228" selection-start-column="36" selection-end-line="228" selection-end-column="36" />
               <folding>
                 <element signature="e#353#367#0" expanded="true" />
               </folding>
@@ -124,6 +151,10 @@
         <option value="$PROJECT_DIR$/helloworld_api.py" />
         <option value="$PROJECT_DIR$/app.yaml" />
         <option value="$PROJECT_DIR$/settings.py" />
+        <option value="$PROJECT_DIR$/gae_python_gcm/gcm.py" />
+        <option value="$PROJECT_DIR$/gae_python_gcm/urls.py" />
+        <option value="$PROJECT_DIR$/gae_python_gcm/views.py" />
+        <option value="$PROJECT_DIR$/urls.py" />
       </list>
     </option>
   </component>
@@ -630,8 +661,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gae_python_gcm/gcm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="24" column="69" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="69" />
+        <state relative-caret-position="418">
+          <caret line="228" column="36" selection-start-line="228" selection-start-column="36" selection-end-line="228" selection-end-column="36" />
           <folding>
             <element signature="e#353#367#0" expanded="true" />
           </folding>
@@ -640,10 +671,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/helloworld_api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-675">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        <state relative-caret-position="353">
+          <caret line="88" column="23" selection-start-line="88" selection-start-column="21" selection-end-line="88" selection-end-column="23" />
           <folding>
             <element signature="e#187#196#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="46" column="25" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
+          <folding>
+            <element signature="e#220#234#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <element signature="e#205#223#0" expanded="true" />
           </folding>
         </state>
       </provider>
