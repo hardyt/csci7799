@@ -22,7 +22,7 @@ except:
         LOCALHOST = False
 
 
-GCM_CONFIG = {'gcm_api_key': 'AIzaSyAUfv7q8YdmzQU-5uQalaJJuTQPH9tVKRQ',
+GCM_CONFIG = {'gcm_api_key': 'AIzaSyBRHkS9iE9MjJmvqrs5p9-pTd9xXKE0RSk',
 #              'delete_bad_token_callback_func': 'EXAMPLE_MANAGE_TOKENS_MODULE.delete_bad_gcm_token',
 #              'update_token_callback_func': 'EXAMPLE_MANAGE_TOKENS_MODULE.update_gcm_token',
               }

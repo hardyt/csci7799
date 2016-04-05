@@ -54,6 +54,8 @@ handlers:
 # Endpoints handler: Must be /_ah/spi. Apps send requests to /_ah/api, but these are handled at /_ah/spi!!
 - url: /_ah/spi/.*
   script: helloworld_api.APPLICATION
+- url: /gae_python_gcm/send_request(/.*)?
+  script: main.app
 
 - url: /js
   static_dir: static/js

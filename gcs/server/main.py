@@ -15,12 +15,41 @@
 # limitations under the License.
 
 import webapp2
+import logging
+
+from gae_python_gcm.gcm import GCMConnection, GCMMessage
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Welcome to Thomas M. Hardy .com!')
 
+class send_request_handler(webapp2.RequestHandler):
+    def post(self):
+        try:
+            device_tokens = self.request.get('device_tokens')
+            notification = self.request.get('notification')
+            collapse_key = self.request.get('collapse_key')
+            delay_while_idle = self.request.get('delay_while_idle')
+            time_to_live = self.request.get('time_to_live')
+
+            if ',' in device_tokens:
+                device_tokens = device_tokens.split(',')
+            else:
+                device_tokens = [device_tokens]
+            message = GCMMessage(device_tokens, notification, collapse_key, delay_while_idle, time_to_live)
+
+            logging.info('message: ' + repr(message))
+
+            gcm_connection = GCMConnection()
+            gcm_connection._send_request(message)
+        except:
+            logging.exception('Error in send_request_handler')
+            logging.info('message: ' + repr(self.request))
+
+        return False
+
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/gae_python_gcm/send_request', send_request_handler),
 ], debug=True)
 

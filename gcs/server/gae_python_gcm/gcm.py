@@ -18,11 +18,11 @@ except ImportError:
 
 from google.appengine.api import taskqueue  ## Google App Engine specific
 
-from django.core.cache import cache
-from django.utils import importlib
+from google.appengine.api import memcache
+from google.appengine._internal.django.utils import importlib
 
 LOCALHOST = False
-GCM_CONFIG = {'gcm_api_key': 'AIzaSyAUfv7q8YdmzQU-5uQalaJJuTQPH9tVKRQ',
+GCM_CONFIG = {'gcm_api_key': 'AIzaSyBRHkS9iE9MjJmvqrs5p9-pTd9xXKE0RSk',
 #              'delete_bad_token_callback_func': 'EXAMPLE_MANAGE_TOKENS_MODULE.delete_bad_gcm_token',
 #              'update_token_callback_func': 'EXAMPLE_MANAGE_TOKENS_MODULE.update_gcm_token',
               }
@@ -68,6 +68,7 @@ class GCMMessage:
         self.collapse_key = collapse_key
         self.delay_while_idle = delay_while_idle
         self.time_to_live = time_to_live
+        logging.info('self.device_tokens: ' + repr(self.device_tokens))
 
     def __unicode__(self):
         return "%s:%s:%s:%s:%s" % (repr(self.device_tokens), repr(self.notification), repr(self.collapse_key), repr(self.delay_while_idle), repr(self.time_to_live))
@@ -180,20 +181,20 @@ class GCMConnection:
 
     def _get_memcached(self, variable_name):
         memcache_key = self._gcm_connection_memcache_key(variable_name)
-        return cache.get(memcache_key)
+        return memcache.get(memcache_key)
     
     
     def _set_memcached(self, variable_name, value, timeout=None):
         memcache_key = self._gcm_connection_memcache_key(variable_name)
-        return cache.set(memcache_key, value, timeout=timeout)
+        return memcache.set(memcache_key, value, timeout=timeout)
     
     
     def _incr_memcached(self, variable_name, increment):
         memcache_key = self._gcm_connection_memcache_key(variable_name)
         try:
-            return cache.incr(memcache_key, increment)
+            return memcache.incr(memcache_key, increment)
         except ValueError:
-            return cache.set(memcache_key, increment)
+            return memcache.set(memcache_key, increment)
         
 
     # Add message to queue
@@ -228,7 +229,8 @@ class GCMConnection:
                    'Authorization': 'key=' + GCM_CONFIG['gcm_api_key'],
                    'Content-Type': 'application/json'
                    }
-        
+
+        logging.info('GCM request headers: ' + repr(headers))
         gcm_post_json_str = ''
         try:
             gcm_post_json_str = message.json_string()
@@ -288,8 +290,8 @@ class GCMConnection:
             if e.code == 400:
                 logging.error('400, Invalid GCM JSON message: ' + repr(gcm_post_json_str))
             elif e.code == 401:
-                logging.error('401, Error authenticating with GCM. Retrying message. Might need to fix auth key!')
-                self._requeue_message(message)
+                logging.error('401, Error authenticating with GCM. Not retrying message. Might need to fix auth key!')
+                #self._requeue_message(message)
             elif e.code == 500:
                 logging.error('500, Internal error in the GCM server while trying to send message: ' + repr(gcm_post_json_str))
             elif e.code == 503:

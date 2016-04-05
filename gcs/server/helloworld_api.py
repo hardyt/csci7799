@@ -3,9 +3,6 @@
 Defined here are the ProtoRPC messages needed to define Schemas for methods
 as well as those methods defined in an API.
 """
-
-import os
-
 import endpoints
 from protorpc import messages
 from protorpc import message_types
