@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.0.0'
     }
 }
 
@@ -60,7 +60,6 @@ android {
     compileSdkVersion 23
     buildToolsVersion '23.0.3'
 
-
     signingConfigs {
         releaseConfig {
             storeFile file('gradlekeystore.jks');
@@ -88,7 +87,7 @@ android {
     sourceSets { patientFlavor { res.srcDirs = ['src/patientFlavor/res', 'src/patientFlavor/res/layout'] } }
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 19
         targetSdkVersion 23
         multiDexEnabled true
         versionCode 1

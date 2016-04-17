@@ -36,6 +36,10 @@ handlers:
 - url: /
   script: main.app
 
+- url: /playboy.html
+  static_files: static/playboy.html
+  upload: static/playboy\.html
+
 - url: /resume2(/.*)?
   script: resume2.py
 

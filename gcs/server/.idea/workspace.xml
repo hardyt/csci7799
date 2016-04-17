@@ -2,13 +2,59 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6cf0f5c5-c903-4fc9-976a-8b6a1c943446" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/Messaging$Builder.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/Messaging$Builder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/Messaging$MessagingEndpoint$SendMessage.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/Messaging$MessagingEndpoint$SendMessage.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/Messaging$MessagingEndpoint.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/Messaging$MessagingEndpoint.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/Messaging.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/Messaging.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/MessagingRequest.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/MessagingRequest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/MessagingScopes.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/messaging/MessagingScopes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration$Builder.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration$Builder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration$ListDevices.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration$ListDevices.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration$Register.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration$Register.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration$Unregister.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration$Unregister.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/Registration.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/RegistrationRequest.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/RegistrationRequest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/RegistrationScopes.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/RegistrationScopes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/model/CollectionResponseRegistrationRecord.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/model/CollectionResponseRegistrationRecord.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/model/RegistrationRecord.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/endpointsSrc/com/thomasmhardy/csci7799/backend/registration/model/RegistrationRecord.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/main/com/thomasmhardy/csci7799/backend/MessagingEndpoint.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/main/com/thomasmhardy/csci7799/backend/MessagingEndpoint.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/main/com/thomasmhardy/csci7799/backend/OfyService.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/main/com/thomasmhardy/csci7799/backend/OfyService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/main/com/thomasmhardy/csci7799/backend/RegistrationEndpoint.class" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/classes/main/com/thomasmhardy/csci7799/backend/RegistrationEndpoint.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/client-libs/messaging-v1-java.zip" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/client-libs/messaging-v1-java.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/client-libs/registration-v1-java.zip" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/client-libs/registration-v1-java.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/libs/backend-android-endpoints.jar" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/libs/backend-android-endpoints.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/build.gradle" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/proguard-rules.txt" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/proguard-rules.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/labFlavor/java/com/google/devrel/samples/helloendpoints/MainActivity.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/labFlavor/java/com/google/devrel/samples/helloendpoints/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/main/java/com/google/devrel/samples/helloendpoints/RealPathUtil.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/HelloEndpoints/src/main/java/com/google/devrel/samples/helloendpoints/RealPathUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/messaging/Messaging.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/messaging/Messaging.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/messaging/MessagingRequest.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/messaging/MessagingRequest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/messaging/MessagingRequestInitializer.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/messaging/MessagingRequestInitializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/messaging/MessagingScopes.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/messaging/MessagingScopes.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/Registration.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/Registration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/RegistrationRequest.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/RegistrationRequest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/RegistrationRequestInitializer.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/RegistrationRequestInitializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/RegistrationScopes.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/RegistrationScopes.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/model/CollectionResponseRegistrationRecord.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/model/CollectionResponseRegistrationRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/model/RegistrationRecord.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/generated-source/endpoints/java/com/thomasmhardy/csci7799/backend/registration/model/RegistrationRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/messaging-v1-java.zip-unzipped/messaging/src/main/java/com/thomasmhardy/csci7799/backend/messaging/Messaging.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/messaging-v1-java.zip-unzipped/messaging/src/main/java/com/thomasmhardy/csci7799/backend/messaging/Messaging.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/messaging-v1-java.zip-unzipped/messaging/src/main/java/com/thomasmhardy/csci7799/backend/messaging/MessagingRequest.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/messaging-v1-java.zip-unzipped/messaging/src/main/java/com/thomasmhardy/csci7799/backend/messaging/MessagingRequest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/messaging-v1-java.zip-unzipped/messaging/src/main/java/com/thomasmhardy/csci7799/backend/messaging/MessagingRequestInitializer.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/messaging-v1-java.zip-unzipped/messaging/src/main/java/com/thomasmhardy/csci7799/backend/messaging/MessagingRequestInitializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/messaging-v1-java.zip-unzipped/messaging/src/main/java/com/thomasmhardy/csci7799/backend/messaging/MessagingScopes.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/messaging-v1-java.zip-unzipped/messaging/src/main/java/com/thomasmhardy/csci7799/backend/messaging/MessagingScopes.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/Registration.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/Registration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/RegistrationRequest.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/RegistrationRequest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/RegistrationRequestInitializer.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/RegistrationRequestInitializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/RegistrationScopes.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/RegistrationScopes.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/model/CollectionResponseRegistrationRecord.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/model/CollectionResponseRegistrationRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/model/RegistrationRecord.java" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/backend/build/tmp/appengineEndpointsExpandClientLibs/registration-v1-java.zip-unzipped/registration/src/main/java/com/thomasmhardy/csci7799/backend/registration/model/RegistrationRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/build.gradle" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../client/HelloEndpointsProject/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/../client/HelloEndpointsProject/build/intermediates/dex-cache/cache.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.yaml" afterPath="$PROJECT_DIR$/app.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gae_python_gcm/gcm.py" afterPath="$PROJECT_DIR$/gae_python_gcm/gcm.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gae_python_gcm/views.py" afterPath="$PROJECT_DIR$/gae_python_gcm/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/helloworld_api.py" afterPath="$PROJECT_DIR$/helloworld_api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/playboy.html" afterPath="$PROJECT_DIR$/static/playboy.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/trista.html" afterPath="$PROJECT_DIR$/static/trista.html" />
     </list>
     <ignored path="server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,14 +76,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="helloworld_api.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="helloworld_api.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/helloworld_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1007">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+            <state relative-caret-position="312">
+              <caret line="101" column="46" selection-start-line="101" selection-start-column="42" selection-end-line="101" selection-end-column="46" />
               <folding>
                 <element signature="e#186#202#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="trista.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/trista.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="playboy.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/playboy.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -55,7 +121,7 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="170">
               <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
               <folding>
                 <element signature="e#205#223#0" expanded="true" />
@@ -67,7 +133,7 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
+            <state relative-caret-position="629">
               <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
               <folding>
                 <element signature="e#600#614#0" expanded="true" />
@@ -76,7 +142,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
@@ -89,18 +155,8 @@
       <file leaf-file-name="app.yaml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="753">
-              <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="resume2.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resume2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6766">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="57" />
+            <state relative-caret-position="680">
+              <caret line="40" column="16" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -109,7 +165,7 @@
       <file leaf-file-name="gcm.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gae_python_gcm/gcm.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
+            <state relative-caret-position="374">
               <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
               <folding>
                 <element signature="e#353#367#0" expanded="true" />
@@ -148,21 +204,24 @@
         <option value="$PROJECT_DIR$/gae_python_gcm/settings.py" />
         <option value="$PROJECT_DIR$/gae_python_gcm/urls.py" />
         <option value="$PROJECT_DIR$/urls.py" />
-        <option value="$PROJECT_DIR$/helloworld_api.py" />
         <option value="$PROJECT_DIR$/gae_python_gcm/views.py" />
         <option value="$PROJECT_DIR$/views.py" />
-        <option value="$PROJECT_DIR$/app.yaml" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/queue.yaml" />
         <option value="$PROJECT_DIR$/gae_python_gcm/gcm.py" />
         <option value="$PROJECT_DIR$/settings.py" />
+        <option value="$PROJECT_DIR$/app.yaml" />
+        <option value="$PROJECT_DIR$/static/trista.html" />
+        <option value="$PROJECT_DIR$/static/playboy.html" />
+        <option value="$PROJECT_DIR$/helloworld_api.py" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" />
-  <component name="JsBuildToolPackageJson" detection-done="true" />
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
@@ -195,7 +254,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -224,6 +282,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="gae_python_gcm" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -231,6 +303,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -240,10 +313,11 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\git\csci7799\gcs\server" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\git\csci7799\gcs\server\static" />
       <recent name="D:\git\csci7799\gcs\server" />
     </key>
   </component>
@@ -331,6 +405,12 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -468,14 +548,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="App Config Tool" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32982087" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32982087" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -490,6 +570,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32982087" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -509,6 +590,235 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+          <folding>
+            <element signature="e#600#614#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="16" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/gcm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
+          <folding>
+            <element signature="e#353#367#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/queue.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helloworld_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#186#202#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/trista.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helloworld_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1360">
+          <caret line="87" column="178" selection-start-line="87" selection-start-column="178" selection-end-line="87" selection-end-column="178" />
+          <folding>
+            <element signature="e#186#202#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/trista.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/playboy.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <element signature="e#205#223#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+          <folding>
+            <element signature="e#600#614#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="16" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/gcm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
+          <folding>
+            <element signature="e#353#367#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/queue.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helloworld_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#186#202#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <element signature="e#205#223#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+          <folding>
+            <element signature="e#600#614#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resume2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/gcm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
+          <folding>
+            <element signature="e#353#367#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/queue.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/helloworld_api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -523,9 +833,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#735#773#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -541,9 +848,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="11" column="69" selection-start-line="11" selection-start-column="69" selection-end-line="11" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -569,9 +873,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="11" column="69" selection-start-line="11" selection-start-column="69" selection-end-line="11" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -597,9 +898,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -607,16 +905,43 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="447">
           <caret line="68" column="42" selection-start-line="68" selection-start-column="42" selection-end-line="68" selection-end-column="42" />
-          <folding>
-            <element signature="e#735#773#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resume2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6766">
+        <state relative-caret-position="119">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="57" column="58" selection-start-line="57" selection-start-column="58" selection-end-line="57" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views.py" />
+    <entry file="file://$PROJECT_DIR$/static/trista.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/playboy.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -629,46 +954,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gae_python_gcm/__init__.py">
+    <entry file="file://$PROJECT_DIR$/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gae_python_gcm/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="57" column="58" selection-start-line="57" selection-start-column="58" selection-end-line="57" selection-end-column="58" />
+        <state relative-caret-position="170">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
           <folding>
-            <element signature="e#220#234#0" expanded="true" />
+            <element signature="e#205#223#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+        <state relative-caret-position="629">
+          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+          <folding>
+            <element signature="e#600#614#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="753">
-          <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+        <state relative-caret-position="680">
+          <caret line="40" column="16" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/gae_python_gcm/gcm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+        <state relative-caret-position="374">
+          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
           <folding>
-            <element signature="e#600#614#0" expanded="true" />
+            <element signature="e#353#367#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -683,39 +1010,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/helloworld_api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1007">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="312">
+          <caret line="101" column="46" selection-start-line="101" selection-start-column="42" selection-end-line="101" selection-end-column="46" />
           <folding>
             <element signature="e#186#202#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gae_python_gcm/gcm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
-          <folding>
-            <element signature="e#353#367#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-          <folding>
-            <element signature="e#205#223#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="69" selection-start-line="24" selection-start-column="69" selection-end-line="24" selection-end-column="69" />
-          <folding />
         </state>
       </provider>
     </entry>

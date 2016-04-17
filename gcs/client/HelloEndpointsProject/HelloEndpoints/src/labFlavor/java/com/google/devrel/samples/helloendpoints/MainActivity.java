@@ -19,8 +19,13 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +82,7 @@ import static com.google.devrel.samples.helloendpoints.BuildConfig.DEBUG;
  */
 public class MainActivity extends Activity {
   private static final String LOG_TAG = "MainActivity";
+  private static final int PICKFILE_RESULT_CODE = 1111;
 
   /**
    * Activity result indicating a return from the Google account selection intent.
@@ -141,17 +147,33 @@ public class MainActivity extends Activity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (requestCode == ACTIVITY_RESULT_FROM_ACCOUNT_SELECTION && resultCode == RESULT_OK) {
-      // This path indicates the account selection activity resulted in the user selecting a
-      // Google account and clicking OK.
+    switch(requestCode) {
 
-      // Set the selected account.
-      String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-      TextView emailAccountTextView = (TextView)this.findViewById(id.email_address_tv);
-      emailAccountTextView.setText(accountName);
+      case ACTIVITY_RESULT_FROM_ACCOUNT_SELECTION:
+        if(resultCode == RESULT_OK)
+        {
+          // This path indicates the account selection activity resulted in the user selecting a
+          // Google account and clicking OK.
 
-      // Fire off the authorization check for this account and OAuth2 scopes.
-      performAuthCheck("Logged in as: " + accountName);
+          // Set the selected account.
+          String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+          TextView emailAccountTextView = (TextView)this.findViewById(id.email_address_tv);
+          emailAccountTextView.setText(accountName);
+
+          // Fire off the authorization check for this account and OAuth2 scopes.
+          performAuthCheck("Logged in as: " + accountName);
+        }
+        break;
+
+      case PICKFILE_RESULT_CODE:
+        if (resultCode == RESULT_OK) {
+          String realPath = RealPathUtil.getPath(this, data.getData());
+
+          //String FilePath = data.getData().getPath();
+          Log.d(LOG_TAG, "Path is: " + realPath);
+          uploadFile(realPath);
+        }
+        break;
     }
   }
 
@@ -255,6 +277,120 @@ public class MainActivity extends Activity {
 
   public void onClickFileChooser(View view)
   {
+    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+    intent.setType("*/*");
+    startActivityForResult(intent,PICKFILE_RESULT_CODE);
+  }
+
+  public void uploadFile(String strFilePath)
+  {
+    final File file = new File(strFilePath);
+    int permission = ContextCompat.checkSelfPermission(this,
+            Manifest.permission.C2D_MESSAGE);
+    Log.i(LOG_TAG, "checking if I can read files: " + permission);
+    Log.i(LOG_TAG, "checking if I can create a credential");
+    try {
+      KeyStore keystore = KeyStore.getInstance("PKCS12");
+      Log.i(LOG_TAG, "Cred-1");
+      keystore.load(getResources().openRawResource(R.raw.thomasmhardy_ebc515c808a6),
+              "notasecret".toCharArray());
+      PrivateKey key = (PrivateKey) keystore.getKey("privatekey", "notasecret".toCharArray());
+      Log.i(LOG_TAG, "Cred0");
+      credential = new GoogleCredential.Builder()
+              .setTransport(httpTransport)
+              .setJsonFactory(JSON_FACTORY)
+              .setServiceAccountPrivateKey(key)
+              .setServiceAccountId(SERVICE_ACCOUNT_EMAIL)
+              .setServiceAccountScopes(Collections.singleton(STORAGE_SCOPE))
+              // .setServiceAccountUser(SERVICE_ACCOUNT_EMAIL)
+              // .setClientSecrets(CLIENT_ID, CLIENT_SECRET)
+              .build();
+    } catch (KeyStoreException e) {
+      Log.e(LOG_TAG, "KeyStoreException: " + e.getMessage());
+    } catch (CertificateException e) {
+      Log.e(LOG_TAG, "CertificateException: " + e.getMessage());
+    } catch (NoSuchAlgorithmException e) {
+      Log.e(LOG_TAG, "NoSuchAlgorithmException: " + e.getMessage());
+    } catch (IOException e) {
+      Log.e(LOG_TAG, "IOException: " + e.getMessage());
+    } catch (UnrecoverableKeyException e) {
+      Log.e(LOG_TAG, "UnrecoverableKeyException: " + e.getMessage());
+    }
+
+    // Everything is set to post the file.
+    URI = "https://www.googleapis.com" +
+            "/upload/storage/v1/b/" +
+            BUCKET_NAME +
+            "/o?uploadType=media&" +
+            "name=" + file.getName();
+
+    new AsyncTask<Void, Void, GoogleCredential>(){
+
+      @Override
+      protected GoogleCredential doInBackground(Void... view) {
+        // First run an async credential update.
+        Log.i(LOG_TAG, "Cred3");
+        // refresh credentials
+        try {
+          credential.refreshToken();
+        } catch (IOException e) {
+          Log.e(LOG_TAG, "IOException: " + e.getMessage());
+        }
+        return credential;
+      }
+
+      @Override
+      protected void onPostExecute(final GoogleCredential credential) {
+        // Then run async put.
+        AsyncHttpClient client = new AsyncHttpClient();
+        Log.i(LOG_TAG, "URL is: " + URI);
+        RequestParams params = new RequestParams();
+        //params.put("Content-Type", "binary/octet-stream");
+        //params.put("Content-Length", "" + file.length());
+        client.addHeader("Content-Type", "binary/octet-stream");
+        client.addHeader("Authorization", "Bearer " + credential.getAccessToken());
+        try {
+          params.put(file.getName(), file);
+        } catch (FileNotFoundException e) {
+          Log.e(LOG_TAG, "File not found: " + e.getMessage());
+        }
+        Log.i(LOG_TAG, "Client?: " + client);
+
+        client.post(URI, params, new AsyncHttpResponseHandler() {
+          @Override
+          public void onStart() {
+            // called before request is started
+            Log.i(LOG_TAG, "Request starting with credential: " + credential.getAccessToken());
+          }
+
+          @Override
+          public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+            // called when response HTTP status is "200 OK"
+            String strResponse = new String(response);
+            Log.i(LOG_TAG, "Success: " + strResponse);
+          }
+
+          @Override
+          public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+            String strErrorResponse = new String(errorResponse);
+            Log.e(LOG_TAG, "Status code: " + statusCode + " Headers: " + Arrays.toString(headers) +
+                    " Error response: " + strErrorResponse + " Exception: " + e.getMessage());
+          }
+
+          @Override
+          public void onRetry(int retryNo) {
+            // called when request is retried
+            Log.i(LOG_TAG, "Retrying...");
+          }
+        });
+      }
+    }.execute();
+  }
+
+  /*
+  public void onClickFileChooser(View view)
+  {
     FileChooser filechooser = new FileChooser(MainActivity.this);
     filechooser.setFileListener(new FileChooser.FileSelectedListener() {
       @Override
@@ -311,7 +447,7 @@ public class MainActivity extends Activity {
         }
 
         Log.i(LOG_TAG, "Got upload URL: " + strUploadURL);
-        */
+        /
 
 
         Log.i(LOG_TAG, "checking if I can create a credential");
@@ -416,7 +552,7 @@ public class MainActivity extends Activity {
     });
     filechooser.showDialog();
   }
-
+  */
 
   /**
    * This method is invoked when the "Multiply Greeting" button is clicked. See activity_main.xml

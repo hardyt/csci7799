@@ -15,7 +15,7 @@ from gae_python_gcm.gcm import GCMMessage, GCMConnection
 # TODO: Replace the following lines with client IDs obtained from the APIs
 # Console or Cloud Console.
 WEB_CLIENT_ID = '582351471583-mletrplmqgqu0k2ht1oni6kddorajf92.apps.googleusercontent.com'
-ANDROID_CLIENT_ID = '582351471583-6d4guctpvjh2a3n3fhn0qmg79alv3uck.apps.googleusercontent.com'
+ANDROID_CLIENT_ID = '582351471583-h35mllon44q8lit3h6kgf4247s3lr5bk.apps.googleusercontent.com'
 IOS_CLIENT_ID = 'replace this with your iOS client ID'
 ANDROID_AUDIENCE = WEB_CLIENT_ID
 
@@ -85,7 +85,7 @@ class HelloWorldApi(remote.Service):
                       name='greetings.getGreeting')
     def greeting_get(self, request):
         try:
-            push_token = 'fgNBT_sTMpY:APA91bENb19i747bzDg2bh4AM7L92rLryARyM4_rf_dZiFsFi0wSUGnWZvTu_wYSMoNS_Ezl8zT3kxY0GbgUbGTlbtkjpw3Yy28HLu6X4pjI6f4sPfNO8O-GqtY8BsSNy7BpTQ4RAwxA'
+            push_token = 'dT3u3O6QBNk:APA91bEdvRfSa_Qd3KhOFQJ2yZTGIFZQgivgYOFxDVUp84izpRSFToFSDJ_l0r1qAz7YFtEriRDbIQzA0hPfQjX_oxHXiEkWe1yJCEwEC6MWRRX3maNyF4imrzG32vUzUv-7HDmMCow-'
             android_payload = {'your-key': 'your-value'}
             gcm_message = GCMMessage(push_token, android_payload)
             gcm_conn = GCMConnection()
