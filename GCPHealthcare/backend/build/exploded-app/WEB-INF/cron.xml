@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+    <cron>
+        <url>/hello</url>
+        <description>Send me an email of outstanding items in the morning</description>
+        <schedule>1 of jan 00:00</schedule>
+    </cron>
+</cronentries>

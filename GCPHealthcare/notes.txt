@@ -1,0 +1,12 @@
+firebase id: sweltering-inferno-1859.firebaseio.com
+android client id: 135142527388-9brl28f3i15ilbfv9an2tp3ovi5puddo.apps.googleusercontent.com
+
+Analytics tracking ID
+UA-76542762-1
+Google Analytics Account
+thomas.m.hardy@gmail.com Apps
+Analytics Property
+atrware Android: com.atrware.gcphealthcare
+
+android gcm api key AIzaSyBmcJMZ2gFHoy0EdrbSbY0dKI9O5qBrre8
+server gcm api key AIzaSyD6rHzF0MvHWiU47RLLbupQDEal4y3mUbM
