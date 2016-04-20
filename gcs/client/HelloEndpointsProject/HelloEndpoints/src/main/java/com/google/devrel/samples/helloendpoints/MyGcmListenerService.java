@@ -28,6 +28,8 @@ package com.google.devrel.samples.helloendpoints;
 
         import com.google.android.gms.gcm.GcmListenerService;
 
+        import com.google.devrel.samples.helloendpoints.R;
+
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";

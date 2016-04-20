@@ -1,12 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" >
+<items version="2" />
 
-    <item
-        jar="D:\git\csci7799\gcs\client\HelloEndpointsProject\HelloEndpoints\build\intermediates\incremental-classes\labFlavor\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="23.0.3"
-        sha1="e328635b938278cba065df3513ce1591a213e997">
-        <dex dex="D:\git\csci7799\gcs\client\HelloEndpointsProject\HelloEndpoints\build\intermediates\transforms\dex\labFlavor\debug\folders\1000\10\instant-run-bootstrap_7284af7f0ffe27c17120cdac139b3a78b4d929fd\classes.dex" />
-    </item>
-
-</items>

@@ -15,9 +15,11 @@
 
 package com.google.devrel.samples.helloendpoints;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -39,9 +41,15 @@ import com.appspot.your_app_id.helloworld.Helloworld.Greetings.Authed;
 import com.appspot.your_app_id.helloworld.Helloworld.Greetings.ListGreeting;
 import com.appspot.your_app_id.helloworld.model.HelloGreeting;
 import com.appspot.your_app_id.helloworld.model.HelloGreetingCollection;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -49,7 +57,6 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.common.base.Strings;
-import com.google.devrel.samples.helloendpoints.R.id;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -72,13 +79,15 @@ import cz.msebera.android.httpclient.Header;
 
 import static com.google.devrel.samples.helloendpoints.BuildConfig.DEBUG;
 
+import com.google.devrel.samples.helloendpoints.R.id;
+import com.google.devrel.samples.helloendpoints.R;
+
 /**
  * Sample Android application for the Hello World tutorial for Google Cloud Endpoints. The sample
  * code shows many of the better practices described in the links below.
  *
  * @see <a href="https://developers.google.com/appengine/docs/java/endpoints">https://developers.google.com/appengine/docs/java/endpoints</a>
  * @see <a href="https://developers.google.com/appengine/docs/java/endpoints/consume_android">https://developers.google.com/appengine/docs/java/endpoints/consume_android</a>
- *
  */
 public class MainActivity extends Activity {
   private static final String LOG_TAG = "MainActivity";
@@ -102,6 +111,11 @@ public class MainActivity extends Activity {
   private HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
   private String authorization = "";
   private String URI = "";
+  /**
+   * ATTENTION: This was auto-generated to implement the App Indexing API.
+   * See https://g.co/AppIndexing/AndroidStudio for more information.
+   */
+  private GoogleApiClient client;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +135,7 @@ public class MainActivity extends Activity {
     onClickSignIn(MainActivity.this.findViewById(id.email_address_tv));
 
     TextView topTitleTV = (TextView) MainActivity.this.findViewById(id.top_title_tv);
-    if(Constants.type == Constants.Type.PATIENT) {
+    if (Constants.type == Constants.Type.PATIENT) {
       topTitleTV.setText("This application to check your results.");
     } else if (Constants.type == Constants.Type.PCP) {
       topTitleTV.setText("Use this application to check results and forward them to the " +
@@ -132,12 +146,15 @@ public class MainActivity extends Activity {
     } else {
       topTitleTV.setText("Unknown App");
     }
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    if (mAuthTask!=null) {
+    if (mAuthTask != null) {
       mAuthTask.cancel(true);
       mAuthTask = null;
     }
@@ -147,17 +164,16 @@ public class MainActivity extends Activity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
-    switch(requestCode) {
+    switch (requestCode) {
 
       case ACTIVITY_RESULT_FROM_ACCOUNT_SELECTION:
-        if(resultCode == RESULT_OK)
-        {
+        if (resultCode == RESULT_OK) {
           // This path indicates the account selection activity resulted in the user selecting a
           // Google account and clicking OK.
 
           // Set the selected account.
           String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-          TextView emailAccountTextView = (TextView)this.findViewById(id.email_address_tv);
+          TextView emailAccountTextView = (TextView) this.findViewById(id.email_address_tv);
           emailAccountTextView.setText(accountName);
 
           // Fire off the authorization check for this account and OAuth2 scopes.
@@ -175,6 +191,40 @@ public class MainActivity extends Activity {
         }
         break;
     }
+  }
+
+  static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001;
+
+  /**
+   * This method is a hook for background threads and async tasks that need to
+   * provide the user a response UI when an exception occurs.
+   */
+  public void handleException(final Exception e) {
+    // Because this call comes from the AsyncTask, we must ensure that the following
+    // code instead executes on the UI thread.
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        if (e instanceof GooglePlayServicesAvailabilityException) {
+          // The Google Play services APK is old, disabled, or not present.
+          // Show a dialog created by Google Play services that allows
+          // the user to update the APK
+          int statusCode = ((GooglePlayServicesAvailabilityException) e)
+                  .getConnectionStatusCode();
+          Dialog dialog = GooglePlayServicesUtil.getErrorDialog(statusCode,
+                  MainActivity.this,
+                  REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+          dialog.show();
+        } else if (e instanceof UserRecoverableAuthException) {
+          // Unable to authenticate, such as when the user has not yet granted
+          // the app access to the account, but the user can fix this.
+          // Forward the user to an activity in Google Play services.
+          Intent intent = ((UserRecoverableAuthException) e).getIntent();
+          startActivityForResult(intent,
+                  REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+        }
+      }
+    });
   }
 
   private boolean isSignedIn() {
@@ -246,7 +296,7 @@ public class MainActivity extends Activity {
     // static-inner or top-level classes to prevent memory leak issues.
     // @see http://goo.gl/fN1fuE @26:00 for an great explanation.
     AsyncTask<Void, Void, HelloGreetingCollection> getAndDisplayGreeting =
-            new AsyncTask<Void, Void, HelloGreetingCollection> () {
+            new AsyncTask<Void, Void, HelloGreetingCollection>() {
               @Override
               protected HelloGreetingCollection doInBackground(Void... unused) {
                 // Retrieve service handle using null credential since this is an unauthenticated call.
@@ -264,8 +314,8 @@ public class MainActivity extends Activity {
 
               @Override
               protected void onPostExecute(HelloGreetingCollection greeting) {
-                if (greeting!=null && greeting.getItems()!=null) {
-                  displayGreetings(greeting.getItems().toArray(new HelloGreeting[] {}));
+                if (greeting != null && greeting.getItems() != null) {
+                  displayGreetings(greeting.getItems().toArray(new HelloGreeting[]{}));
                 } else {
                   Log.e(LOG_TAG, "No greetings were returned by the API.");
                 }
@@ -275,18 +325,16 @@ public class MainActivity extends Activity {
     getAndDisplayGreeting.execute((Void) null);
   }
 
-  public void onClickFileChooser(View view)
-  {
+  public void onClickFileChooser(View view) {
     Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
     intent.setType("*/*");
-    startActivityForResult(intent,PICKFILE_RESULT_CODE);
+    startActivityForResult(intent, PICKFILE_RESULT_CODE);
   }
 
-  public void uploadFile(String strFilePath)
-  {
+  public void uploadFile(String strFilePath) {
     final File file = new File(strFilePath);
     int permission = ContextCompat.checkSelfPermission(this,
-            Manifest.permission.C2D_MESSAGE);
+            Manifest.permission.WRITE_EXTERNAL_STORAGE);
     Log.i(LOG_TAG, "checking if I can read files: " + permission);
     Log.i(LOG_TAG, "checking if I can create a credential");
     try {
@@ -324,7 +372,7 @@ public class MainActivity extends Activity {
             "/o?uploadType=media&" +
             "name=" + file.getName();
 
-    new AsyncTask<Void, Void, GoogleCredential>(){
+    new AsyncTask<Void, Void, GoogleCredential>() {
 
       @Override
       protected GoogleCredential doInBackground(Void... view) {
@@ -403,7 +451,7 @@ public class MainActivity extends Activity {
         Log.i(LOG_TAG, "Finished list.");
         */
 
-        // List files - not implemented yet
+  // List files - not implemented yet
 
         /*
         // Get upload URL for blobstore option
@@ -633,12 +681,13 @@ public class MainActivity extends Activity {
     // static-inner or top-level classes to prevent memory leak issues.
     // @see http://goo.gl/fN1fuE @26:00 for an great explanation.
     AsyncTask<Void, Void, HelloGreeting> getAuthedGreetingAndDisplay =
-            new AsyncTask<Void, Void, HelloGreeting> () {
+            new AsyncTask<Void, Void, HelloGreeting>() {
               @Override
               protected HelloGreeting doInBackground(Void... unused) {
                 if (!isSignedIn()) {
                   return null;
-                };
+                }
+                ;
 
                 if (!AppConstants.checkGooglePlayServicesAvailable(MainActivity.this)) {
                   return null;
@@ -664,7 +713,7 @@ public class MainActivity extends Activity {
 
               @Override
               protected void onPostExecute(HelloGreeting greeting) {
-                if (greeting!=null) {
+                if (greeting != null) {
                   displayGreetings(greeting);
                 } else {
                   Log.e(LOG_TAG, "No greetings were returned by the API.");
@@ -672,12 +721,12 @@ public class MainActivity extends Activity {
               }
             };
 
-    getAuthedGreetingAndDisplay.execute((Void)null);
+    getAuthedGreetingAndDisplay.execute((Void) null);
   }
 
   private void displayGreetings(HelloGreeting... greetings) {
     String msg;
-    if (greetings==null || greetings.length < 1) {
+    if (greetings == null || greetings.length < 1) {
       msg = "Greeting was not present";
       Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     } else {
@@ -710,7 +759,7 @@ public class MainActivity extends Activity {
       Account[] accounts = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
       if (accounts != null && accounts.length > 0) {
         // Select account and perform authorization check.
-        emailAddressTV.setText("Logged in as: " + accounts[0].name);
+        emailAddressTV.setText(accounts[0].name);
         mEmailAccount = accounts[0].name;
         performAuthCheck(accounts[0].name);
       }
@@ -748,6 +797,48 @@ public class MainActivity extends Activity {
     mAuthTask = new AuthorizationCheckTask();
     mAuthTask.execute(emailAccount);
   }
+
+  /*
+  @Override
+  public void onStart() {
+    super.onStart();
+
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    client.connect();
+    Action viewAction = Action.newAction(
+            Action.TYPE_VIEW, // TODO: choose an action type.
+            "Main Page", // TODO: Define a title for the content shown.
+            // TODO: If you have web page content that matches this app activity's content,
+            // make sure this auto-generated web page URL is correct.
+            // Otherwise, set the URL to null.
+            Uri.parse("http://host/path"),
+            // TODO: Make sure this auto-generated app URL is correct.
+            Uri.parse("android-app://com.google.devrel.samples.helloendpoints/http/host/path")
+    );
+    AppIndex.AppIndexApi.start(client, viewAction);
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    Action viewAction = Action.newAction(
+            Action.TYPE_VIEW, // TODO: choose an action type.
+            "Main Page", // TODO: Define a title for the content shown.
+            // TODO: If you have web page content that matches this app activity's content,
+            // make sure this auto-generated web page URL is correct.
+            // Otherwise, set the URL to null.
+            Uri.parse("http://host/path"),
+            // TODO: Make sure this auto-generated app URL is correct.
+            Uri.parse("android-app://com.google.devrel.samples.helloendpoints/http/host/path")
+    );
+    AppIndex.AppIndexApi.end(client, viewAction);
+    client.disconnect();
+  }
+  */
 
   /**
    * Verifies OAuth2 token access for the application and Google account combination with
@@ -787,14 +878,16 @@ public class MainActivity extends Activity {
                 MainActivity.this, AppConstants.AUDIENCE);
         credential.setSelectedAccountName(emailAccount);
 
-        String accessToken = credential.getToken();
+        String SCOPE = "oauth2:https://www.googleapis.com/auth/userinfo.profile";
 
-        if (DEBUG) {
-          Log.d(LOG_TAG, "AccessToken retrieved");
-        }
+        String accessToken = GoogleAuthUtil.getToken(MainActivity.this, emailAccount, SCOPE);
+        Log.i(LOG_TAG, "AccessToken retrieved: " + accessToken);
 
         // Success.
         return true;
+      } catch (UserRecoverableAuthException userRecoverableException) {
+        handleException(userRecoverableException);
+        return false;
       } catch (GoogleAuthException unrecoverableException) {
         Log.e(LOG_TAG, "Exception checking OAuth2 authentication.", unrecoverableException);
         publishProgress(R.string.toast_exception_checking_authorization);
@@ -807,6 +900,7 @@ public class MainActivity extends Activity {
         return false;
       }
     }
+
 
     @Override
     protected void onProgressUpdate(Integer... stringIds) {
@@ -858,9 +952,9 @@ public class MainActivity extends Activity {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-      TextView view = (TextView)super.getView(position, convertView, parent);
+      TextView view = (TextView) super.getView(position, convertView, parent);
 
-      HelloGreeting greeting = (HelloGreeting)this.getItem(position);
+      HelloGreeting greeting = (HelloGreeting) this.getItem(position);
 
       StringBuilder sb = new StringBuilder();
 
