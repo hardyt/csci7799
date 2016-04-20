@@ -10,3 +10,6 @@ atrware Android: com.atrware.gcphealthcare
 
 android gcm api key AIzaSyBmcJMZ2gFHoy0EdrbSbY0dKI9O5qBrre8
 server gcm api key AIzaSyD6rHzF0MvHWiU47RLLbupQDEal4y3mUbM
+
+web client id 135142527388-dm9igq5hiat1i3908c811j97dbfsc6vc.apps.googleusercontent.com
+client secret fWL2Wqdp37q5Edlsvl66a3HN
