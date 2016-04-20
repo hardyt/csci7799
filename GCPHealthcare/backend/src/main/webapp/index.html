@@ -77,10 +77,12 @@
         if (!message) {
           message = '(Empty message)';
         }
+
         gapi.client.messaging.messagingEndpoint.sendMessage({'message': message}).execute(
           function(response) {
             var outputAlertDiv = document.getElementById('outputAlert');
             outputAlertDiv.style.visibility = 'visible';
+
             if (response && response.error) {
               outputAlertDiv.className = 'alert alert-danger';
               outputAlertDiv.innerHTML = '<b>Error Code:</b> ' + response.error.code + ' [' + response.error.message +']';
@@ -94,6 +96,7 @@
         return false;
       }
     }
+
     // This is called initially
     function init() {
       var apiName = 'messaging'
