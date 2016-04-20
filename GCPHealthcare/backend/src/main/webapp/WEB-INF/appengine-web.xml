@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-    <application>myApplicationId</application>
+    <application>atrware</application>
     <version>1</version>
     <threadsafe>true</threadsafe>
     <manual-scaling>
@@ -8,5 +8,6 @@
     </manual-scaling>
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
+        <property name="gcm.api.key" value="AIzaSyD6rHzF0MvHWiU47RLLbupQDEal4y3mUbM"/>
     </system-properties>
 </appengine-web-app>

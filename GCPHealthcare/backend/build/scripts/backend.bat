@@ -69,7 +69,7 @@ set CMD_LINE_ARGS=%$
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\backend.jar;%APP_HOME%\lib\servlet-api-2.5.jar;%APP_HOME%\lib\firebase-client-jvm-2.5.2.jar;%APP_HOME%\lib\httpclient-4.5.2.jar;%APP_HOME%\lib\appengine-api-1.0-sdk-1.9.34.jar;%APP_HOME%\lib\commons-io-1.3.2.jar;%APP_HOME%\lib\json-20140107.jar;%APP_HOME%\lib\jackson-databind-2.2.2.jar;%APP_HOME%\lib\tubesock-0.0.12.jar;%APP_HOME%\lib\jackson-annotations-2.2.2.jar;%APP_HOME%\lib\jackson-core-2.2.2.jar;%APP_HOME%\lib\httpcore-4.4.4.jar;%APP_HOME%\lib\commons-logging-1.2.jar;%APP_HOME%\lib\commons-codec-1.9.jar
+set CLASSPATH=%APP_HOME%\lib\backend.jar;%APP_HOME%\lib\servlet-api-2.5.jar;%APP_HOME%\lib\firebase-client-jvm-2.5.2.jar;%APP_HOME%\lib\httpclient-4.5.2.jar;%APP_HOME%\lib\appengine-api-1.0-sdk-1.9.34.jar;%APP_HOME%\lib\appengine-endpoints-1.9.34.jar;%APP_HOME%\lib\appengine-endpoints-deps-1.9.34.jar;%APP_HOME%\lib\commons-io-1.3.2.jar;%APP_HOME%\lib\objectify-5.1.12.jar;%APP_HOME%\lib\gcm-server-1.0.2.jar;%APP_HOME%\lib\json-20140107.jar;%APP_HOME%\lib\jackson-databind-2.2.2.jar;%APP_HOME%\lib\tubesock-0.0.12.jar;%APP_HOME%\lib\guava-18.0.jar;%APP_HOME%\lib\json-simple-1.1.jar;%APP_HOME%\lib\jackson-annotations-2.2.2.jar;%APP_HOME%\lib\jackson-core-2.2.2.jar;%APP_HOME%\lib\httpcore-4.4.4.jar;%APP_HOME%\lib\commons-logging-1.2.jar;%APP_HOME%\lib\commons-codec-1.9.jar
 
 @rem Execute backend
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %BACKEND_OPTS%  -classpath "%CLASSPATH%" com.atrware.gcphealthcare.backend.GcmSender %CMD_LINE_ARGS%
