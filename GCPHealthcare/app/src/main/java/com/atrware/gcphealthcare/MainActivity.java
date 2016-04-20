@@ -23,6 +23,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,6 +43,7 @@ import android.widget.Toast;
 import android.accounts.AccountManager;
 import android.accounts.Account;
 
+import com.atrware.gcshealthcare.backend.getfilename.Getfilename;
 import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -60,7 +62,10 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.json.JsonFactory;
@@ -135,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView mInformationTextView;
     private boolean isReceiverRegistered;
 
+    private BroadcastReceiver mMessageReceivedReceiver;
+    private boolean isMessageReceiverRegistered;
+
     // for google credentials
     private AuthorizationCheckTask mAuthTask;
     private String mEmailAccount = "";
@@ -155,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
     private String SERVICE_ACCOUNT_EMAIL = "atrware@appspot.gserviceaccount.com";
     private String STORAGE_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write";
 
+    private long timeDifference = 0;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -174,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Begin GCM code
         mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
-        Log.i(LOG_TAG, "GCM setting up the receiver.");
+        Log.i(LOG_TAG, "GCM setting up the registration receiver.");
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -193,8 +203,37 @@ public class MainActivity extends AppCompatActivity {
         };
         mInformationTextView = (TextView) findViewById(R.id.informationTextView);
 
+        Log.i(LOG_TAG, "GCM setting up the message receiver.");
+        mMessageReceivedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.i(LOG_TAG, "GCM received message. File: " +
+                        intent.getExtras().getString("filename"));
+                // End timer
+                timeDifference = System.currentTimeMillis() - timeDifference;
+                // Add the information to Firebase
+                new Firebase(firebaseID)
+                        .push()
+                        .child("text")
+                        .setValue("GCM: " + timeDifference + "ms");
+                new Firebase(firebaseID)
+                        .push()
+                        .child("text")
+                        .setValue(intent.getExtras().getString("filename"));
+
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+
+                // download the file
+                downloadFile(intent.getExtras().getString("filename"));
+
+            }
+        };
+
         // Registering BroadcastReceiver
         registerReceiver();
+        // Registering MessageReceiver
+        registerMessageReceiver();
 
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
@@ -274,20 +313,38 @@ public class MainActivity extends AppCompatActivity {
 
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                new Firebase(firebaseID)
-                        .orderByChild("text")
-                        .equalTo((String) listView.getItemAtPosition(position))
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.hasChildren()) {
-                                    DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
-                                    firstChild.getRef().removeValue();
-                                }
-                            }
 
-                            public void onCancelled(FirebaseError firebaseError) {
-                            }
-                        });
+                // Show file
+                String fileName = (String) listView.getItemAtPosition(position);
+                String mimetype = URLConnection.guessContentTypeFromName(fileName);
+                if(mimetype != null){
+                    // Show file
+                    Log.i(LOG_TAG, "Got mime type: " + mimetype);
+                    File file = new File(
+                            getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()
+                                    + "/" + fileName);
+                    Intent target = new Intent(Intent.ACTION_VIEW);
+                    target.setDataAndType(Uri.fromFile(file), mimetype);
+                    target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(target);
+                } else {
+                    // remove object
+                    new Firebase(firebaseID)
+                            .orderByChild("text")
+                            .equalTo((String) listView.getItemAtPosition(position))
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.hasChildren()) {
+                                        DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
+                                        firstChild.getRef().removeValue();
+                                    }
+                                }
+
+                                public void onCancelled(FirebaseError firebaseError) {
+                                }
+                            });
+                }
+
             }
         });
 
@@ -345,11 +402,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         registerReceiver();
+        registerMessageReceiver();
     }
     @Override
     protected void onPause() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         isReceiverRegistered = false;
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceivedReceiver);
+        isMessageReceiverRegistered = false;
         super.onPause();
     }
     private void registerReceiver() {
@@ -357,6 +417,13 @@ public class MainActivity extends AppCompatActivity {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
             isReceiverRegistered = true;
+        }
+    }
+    private void registerMessageReceiver() {
+        if (!isMessageReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceivedReceiver,
+                    new IntentFilter(QuickstartPreferences.MESSAGE_RECEIVED));
+            isMessageReceiverRegistered = true;
         }
     }
     /**
@@ -444,14 +511,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void downloadFile(final String fileName) {
         getCredential();
         URI = "https://www.googleapis.com" +
                 "/storage/v1/b/" +
                 BUCKET_NAME +
                 "/o/" + fileName + "?alt=media";
-                //"/o/" + fileName;
+        //"/o/" + fileName;
 
 
 
@@ -477,6 +543,9 @@ public class MainActivity extends AppCompatActivity {
                 new AsyncTask<Void, Void, GoogleCredential>() {
                     @Override
                     protected GoogleCredential doInBackground(Void... view) {
+                        // Begin timer
+                        timeDifference = System.currentTimeMillis();
+
                         try {
                             Storage storage = StorageFactory.getService(credential);
                             Storage.Objects.Get getObject = storage.objects().get(BUCKET_NAME, fileName);
@@ -484,9 +553,6 @@ public class MainActivity extends AppCompatActivity {
                             ByteArrayOutputStream out = new ByteArrayOutputStream();
                             getObject.getMediaHttpDownloader().setDirectDownloadEnabled(true);
                             getObject.executeMediaAndDownloadTo(out);
-
-
-
 
                             byte[] b = out.toByteArray();
 
@@ -517,20 +583,16 @@ public class MainActivity extends AppCompatActivity {
                             reader.readLine();
                             strCD = reader.readLine();
 
-                            //ContentDisposition cd = new ContentDisposition(strCD); //useless
                             String[] cdParts = strCD.split("filename=\"");
                             String[] filenameParts = cdParts[1].split("\"");
 
+                            // This won't appear in the logs! Bizarre!
+                            //Log.i(LOG_TAG, "Got metadata: " + fileMetadata);
 
-                            Log.i(LOG_TAG, "Got metadata: " + fileMetadata);
                             Log.i(LOG_TAG, "Here's the cd line: " + strCD);
-                            Log.i(LOG_TAG, "Are you ignoring me? " + Arrays.toString(byteArrays.get(0)));
                             Log.i(LOG_TAG, "Filename from header is " + filenameParts[0]);
-                            //Log.i(LOG_TAG, "Got content disposition: " + cd.getParameter("name"));
-                            //Log.i(LOG_TAG, "Got content disposition string: " + cd.toString());
 
-
-                            OutputStream outputStream = new FileOutputStream (
+                            OutputStream outputStream = new FileOutputStream(
                                     getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()
                                             + "/" + fileName);
                             outputStream.write(byteArrays.get(1));
@@ -545,25 +607,25 @@ public class MainActivity extends AppCompatActivity {
                             Log.e(LOG_TAG, "GCS Api fail: " + e);
                         } catch (NullPointerException e) {
                             Log.e(LOG_TAG, "GCS Api fail: " + e);
-                        //} catch (ParseException e) {
-                        //    Log.e(LOG_TAG, "GCS Api fail: " + e);
                         }
                         return credential;
                     }
                     @Override
                     protected void onPostExecute(final GoogleCredential credential) {
                         Log.i(LOG_TAG, "GCS completed.");
-                        // Current timestamp
-                        String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
+                        // End timer
+                        timeDifference = System.currentTimeMillis() - timeDifference;
                         // Add the information to Firebase
                         final EditText text = (EditText) findViewById(R.id.todoText);
                         new Firebase(firebaseID)
                                 .push()
                                 .child("text")
-                                .setValue(text.getText().toString() + " " + timeStamp);
+                                .setValue("DL: " + timeDifference + "ms");
 
-                        // Show file
-                        String mimetype = URLConnection.guessContentTypeFromName(fileName);
+                        /*
+                        // Show file - this doesn't work when fired by broadcast receiver
+                        String mimetype = URLConnection.guessContentTypeFromName(
+                                fileName);
                         Log.i(LOG_TAG, "Got mime type: " + mimetype);
 
                         File file = new File(
@@ -573,192 +635,14 @@ public class MainActivity extends AppCompatActivity {
                         target.setDataAndType(Uri.fromFile(file), mimetype);
                         target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(target);
+                        */
 
                     }
                 }.execute();
-
-
-                /*
-                // still corrupts the binary
-                AsyncHttpClient client = new AsyncHttpClient();
-                client.addHeader("Authorization", "Bearer " + credential.getAccessToken());
-
-                client.get(URI, new FileAsyncHttpResponseHandler(MainActivity.this) {
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable e, File file) {
-                        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                        Log.e(LOG_TAG, "Error downloading. Status code: " + statusCode + " Headers: " + Arrays.toString(headers) +
-                                " Exception: " + e.getMessage());
-                        Toast.makeText(MainActivity.this, "Error downloading file",
-                                Toast.LENGTH_LONG).show();
-                    }
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, File response) {
-                        // Do something with the file `response`
-                        Log.i(LOG_TAG, "Successful download. Headers: " + Arrays.toString(headers));
-                        Log.i(LOG_TAG, "File is at " + file.getAbsolutePath());
-                        //File dest = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-                        File dest = new File(
-                                getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()
-                                        + "/" + fileName);
-                        try {
-                            FileUtils.moveFile(response, dest);
-                            Log.i(LOG_TAG, "File saved to: " + dest.getAbsolutePath());
-                        } catch (IOException e) {
-                            Log.e(LOG_TAG, "Download file save: " + e.toString());
-                        }
-
-                        Intent target = new Intent(Intent.ACTION_VIEW);
-                        target.setDataAndType(Uri.parse(getExternalFilesDir(
-                                Environment.DIRECTORY_DOWNLOADS) + "/" + fileName), "image/jpeg");
-                        target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(target);
-
-                        // Current timestamp
-                        String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
-                        // Add the information to Firebase
-                        final EditText text = (EditText) findViewById(R.id.todoText);
-                        new Firebase(firebaseID)
-                                .push()
-                                .child("text")
-                                .setValue(text.getText().toString() + " " + timeStamp);
-
-                    }
-
-                    @Override
-                    public void onRetry(int retryNo) {
-                        // called when request is retried
-                        Log.i(LOG_TAG, "Retrying...");
-                        Toast.makeText(MainActivity.this, "Retrying...",
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-                */
-
-                /* save the file with headers that corrupt the binary
-                DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-                Uri Download_Uri = Uri.parse(URI);
-                DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
-
-                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-                request.setAllowedOverRoaming(false);
-                request.setTitle("My Data Download");
-                request.setDescription("Android Data download using DownloadManager.");
-                request.setDestinationInExternalFilesDir(MainActivity.this,Environment.DIRECTORY_DOWNLOADS,fileName);
-                request.addRequestHeader("Authorization", "Bearer " + credential.getAccessToken());
-
-                Long downloadReference = downloadManager.enqueue(request);
-
-                if (downloadReference != null){
-                    // Stupid android download manager saves the download with headers, messing
-                    // up the binary.
-
-                    String inputFile = Uri.parse(getExternalFilesDir(
-                            Environment.DIRECTORY_DOWNLOADS) + "/" + fileName).toString();
-                    String downloadHeaders = "";
-                    Boolean headerFound = false;
-                    int count=1;
-                    try {
-                        BufferedReader br = new BufferedReader(new FileReader(new File(inputFile)));
-                        String line = null;
-                        StringBuilder sb = new StringBuilder();
-                        while((line = br.readLine()) != null){
-                            if(line.startsWith("\n") && !headerFound){
-                                if(sb.length()!=0){
-                                    // The sb contains everything we want for the headers
-                                    downloadHeaders = sb.toString();
-                                    Log.i(LOG_TAG, "Got header: " + downloadHeaders);
-                                    headerFound = true;
-                                    // Now get the rest of the lines and output to the same file
-                                    sb.delete(0, sb.length());
-                                }
-                            } else {
-                                sb.append(line);
-                            }
-                        }
-                        File file = new File(inputFile + "2");
-                        PrintWriter writer = new PrintWriter(file);
-                        writer.println(sb.toString());
-                        writer.close();
-                        sb.delete(0, sb.length());
-                        br.close();
-                    } catch (IOException e) {
-                        Log.e(LOG_TAG,e.toString());
-                    } catch (Exception e) {
-                        Log.e(LOG_TAG,e.toString());
-                    }
-
-                    Intent target = new Intent(Intent.ACTION_VIEW);
-                    target.setDataAndType(Uri.parse(getExternalFilesDir(
-                            Environment.DIRECTORY_DOWNLOADS) + "/" + fileName), "application/pdf");
-                    target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                    Log.i("OPEN_FILE_PATH", getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName);
-
-                    startActivity(target);
-
-                } else {
-                    //TODO something went wrong error
-                }
-                */
-
-                /*
-                // Then run async put.
-                AsyncHttpClient client = new AsyncHttpClient();
-                Log.i(LOG_TAG, "URL for download is: " + URI);
-                RequestParams params = new RequestParams();
-                //params.put("Content-Type", "binary/octet-stream");
-                //params.put("Content-Length", "" + file.length());
-                //client.addHeader("Content-Type", "binary/octet-stream");
-                client.addHeader("Authorization", "Bearer " + credential.getAccessToken());
-
-                client.get(URI, params, new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onStart() {
-                        // called before request is started
-                        Log.i(LOG_TAG, "GET request starting with credential: " + credential.getAccessToken());
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                        // called when response HTTP status is "200 OK"
-                        //String strResponse = new String(response);
-                        Log.i(LOG_TAG, "Success, 200 OK ");
-                        Toast.makeText(MainActivity.this, "File retrieved?",
-                                Toast.LENGTH_LONG).show();
-
-                        String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
-                        // Add the information to Firebase
-                        final EditText text = (EditText) findViewById(R.id.todoText);
-                        new Firebase(firebaseID)
-                                .push()
-                                .child("text")
-                                .setValue(text.getText().toString() + " " + timeStamp);
-
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                        String strErrorResponse = new String(errorResponse);
-                        Log.e(LOG_TAG, "Status code: " + statusCode + " Headers: " + Arrays.toString(headers) +
-                                " Error response: " + strErrorResponse + " Exception: " + e.getMessage());
-                        Toast.makeText(MainActivity.this, "Error downloading file",
-                                Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onRetry(int retryNo) {
-                        // called when request is retried
-                        Log.i(LOG_TAG, "Retrying download...");
-                        Toast.makeText(MainActivity.this, "Retrying download...",
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-                */
             }
         }.execute();
     }
+
 
     public void uploadFile(final String strFilePath) {
         final File file = new File(strFilePath);
@@ -786,6 +670,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(final GoogleCredential credential) {
+                // Begin timer
+                timeDifference = System.currentTimeMillis();
                 // Then run async put.
                 AsyncHttpClient client = new AsyncHttpClient();
                 Log.i(LOG_TAG, "URL for upload is: " + URI);
@@ -812,23 +698,25 @@ public class MainActivity extends AppCompatActivity {
                         // Generate the required information
                         // email address
                         // GCM InstanceID
-                        // Current timestamp
-                        String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
-                        // Add the information to Firebase
-                        final EditText text = (EditText) findViewById(R.id.todoText);
-                        new Firebase(firebaseID)
-                                .push()
-                                .child("text")
-                                .setValue(text.getText().toString() + " " + timeStamp);
                     }
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                         // called when response HTTP status is "200 OK"
+                        // End timer
+                        timeDifference = System.currentTimeMillis() - timeDifference;
+                        // Add the information to Firebase
+                        final EditText text = (EditText) findViewById(R.id.todoText);
+                        new Firebase(firebaseID)
+                                .push()
+                                .child("text")
+                                .setValue("UP: " + timeDifference + "ms");
+
                         String strResponse = new String(response);
                         Log.i(LOG_TAG, "Success: " + strResponse);
                         Toast.makeText(MainActivity.this, "File uploaded",
                                 Toast.LENGTH_LONG).show();
+
                         try{
                             JSONObject jsonObj = new JSONObject(strResponse);
                             Log.i(LOG_TAG, jsonObj.getString("selfLink"));
@@ -837,7 +725,11 @@ public class MainActivity extends AppCompatActivity {
                             Log.e(LOG_TAG, "JSON problem");
                         }
 
-                        downloadFile(file.getName());
+                        // Send a request to Appengine to notify the recepient using GCM
+                        // Start the timer first
+                        timeDifference = System.currentTimeMillis();
+                        // Use the Endpoint API
+                        new sendGCMrequest().execute(new Pair<Context, String>(MainActivity.this, file.getName()));
 
                     }
 
@@ -863,6 +755,48 @@ public class MainActivity extends AppCompatActivity {
         }.execute();
     }
 
+
+    public class sendGCMrequest extends AsyncTask<Pair<Context, String>, Void, String> {
+        private Getfilename myApiService = null;
+        private Context context;
+
+        @Override
+        protected String doInBackground(Pair<Context, String>... params) {
+            if(myApiService == null) {  // Only do this once
+                Getfilename.Builder builder = new Getfilename.Builder(AndroidHttp.newCompatibleTransport(),
+                        new AndroidJsonFactory(), null)
+                        // options for running against local devappserver
+                        // - 10.0.2.2 is localhost's IP address in Android emulator
+                        // - turn off compression when running against local devappserver
+                        //.setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        //.setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                        //    @Override
+                        //    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                        //        abstractGoogleClientRequest.setDisableGZipContent(true);
+                        //    }
+                        //});
+                        .setRootUrl("https://atrware.appspot.com/_ah/api/");
+                // end options for devappserver
+
+                myApiService = builder.build();
+            }
+
+            context = params[0].first;
+            String name = params[0].second;
+
+            try {
+                return myApiService.sayHi(name).execute().getData();
+            } catch (IOException e) {
+                return e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+            Log.i(LOG_TAG, "Sent get request to server. Response: " + result.toString());
+        }
+    }
 
     // This method is invoked when the "Sign In" button is clicked. See activity_main.xml for the
     // dynamic reference to this method.

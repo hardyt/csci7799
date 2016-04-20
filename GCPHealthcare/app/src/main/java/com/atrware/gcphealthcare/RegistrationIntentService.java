@@ -23,9 +23,14 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.atrware.gcshealthcare.backend.registration.Registration;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
 
@@ -88,8 +93,27 @@ public class RegistrationIntentService extends IntentService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
-        // Add custom implementation, as needed.
+    private void sendRegistrationToServer(String token) throws IOException {
+    /* test code
+    private void sendRegistrationToServer(String token) throws IOException {
+        Registration.Builder builder = new Registration.Builder(AndroidHttp.newCompatibleTransport(),
+                new AndroidJsonFactory(), null)
+                // Need setRootUrl and setGoogleClientRequestInitializer only for local testing,
+                // otherwise they can be skipped
+                .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                    @Override
+                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest)
+                            throws IOException {
+                        abstractGoogleClientRequest.setDisableGZipContent(true);
+                    }
+                });
+                */
+        Registration.Builder builder = new Registration.Builder(AndroidHttp.newCompatibleTransport(),
+                new AndroidJsonFactory(), null)
+                .setRootUrl("https://atrware.appspot.com/_ah/api/");
+        Registration regService = builder.build();
+        regService.register(token).execute();
     }
 
     /**

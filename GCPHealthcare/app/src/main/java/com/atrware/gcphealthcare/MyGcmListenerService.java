@@ -24,13 +24,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-
 import com.google.android.gms.gcm.GcmListenerService;
 
 public class MyGcmListenerService extends GcmListenerService {
 
-    private static final String TAG = "MyGcmListenerService";
+    private static final String LOG_TAG = "MyGcmListenerService";
 
     /**
      * Called when message is received.
@@ -43,8 +43,8 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
+        Log.d(LOG_TAG, "From: " + from);
+        Log.d(LOG_TAG, "Message: " + message);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -59,6 +59,10 @@ public class MyGcmListenerService extends GcmListenerService {
          *     - Store message in local database.
          *     - Update UI.
          */
+        Intent messageReceived = new Intent(QuickstartPreferences.MESSAGE_RECEIVED);
+        messageReceived.putExtra("filename", message);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(messageReceived);
+
 
         /**
          * In some cases it may be useful to show a notification indicating to the user
