@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.google.devrel.samples.helloendpoints;
+package com.atrware.gcphealthcare;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -25,10 +25,10 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+//import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.appspot.your_app_id.helloworld.Helloworld;
+
 
 import javax.annotation.Nullable;
 
@@ -42,7 +42,7 @@ public class AppConstants {
    *
    * @see <a href="https://developers.google.com/console">https://developers.google.com/console</a>
    */
-  public static final String WEB_CLIENT_ID = "582351471583-mletrplmqgqu0k2ht1oni6kddorajf92.apps.googleusercontent.com";
+  public static final String WEB_CLIENT_ID = "135142527388-dm9igq5hiat1i3908c811j97dbfsc6vc.apps.googleusercontent.com";
 
   /**
    * The audience is defined by the web client id, not the Android client id.
@@ -75,6 +75,7 @@ public class AppConstants {
   /**
    * Retrieve a Helloworld api service handle to access the API.
    */
+  /*
   public static Helloworld getApiServiceHandle(@Nullable GoogleAccountCredential credential) {
     // Use a builder to help formulate the API request.
     Helloworld.Builder helloWorld = new Helloworld.Builder(AppConstants.HTTP_TRANSPORT,
@@ -86,6 +87,7 @@ public class AppConstants {
 
     return helloWorld.build();
   }
+  */
 
   /**
    * Check that Google Play services APK is installed and up to date.

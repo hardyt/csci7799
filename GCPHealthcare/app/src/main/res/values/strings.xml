@@ -7,4 +7,11 @@
     <string name="token_error_message">An error occurred while either fetching the InstanceID token,
         sending the fetched token to the server or subscribing to the PubSub topic. Please try
         running the sample again.</string>
+    <string name="toast_no_google_account_selected">No Google Account Selected</string>
+    <string name="toast_exception_checking_authorization">Exception checking authorization</string>
+    <string name="toast_no_google_accounts_registered">No Google Accounts Registered</string>
+    <string name="pick_account">Pick an account.</string>
+    <string name="toast_only_one_google_account_registered">
+        Your only registered Google account was selected
+    </string>
 </resources>

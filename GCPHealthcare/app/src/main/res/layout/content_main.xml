@@ -21,6 +21,23 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
+        <LinearLayout android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <TextView
+                android:id="@+id/email_address_tv"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Not signed in" />
+            <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sign_in_button"
+                android:text="Sign in"
+                android:onClick="onClickSignIn"/>
+        </LinearLayout>
+
         <TextView android:text="@string/registering_message" android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/informationTextView"
@@ -30,6 +47,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/registrationProgressBar" />
+
+        <ImageView android:id="@+id/PictureFrame"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
         <ListView
             android:id="@+id/listView"

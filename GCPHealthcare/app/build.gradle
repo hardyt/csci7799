@@ -13,7 +13,7 @@ android {
     buildToolsVersion "24.0.0 rc3"
     defaultConfig {
         applicationId "com.atrware.gcphealthcare"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -30,10 +30,28 @@ android {
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+    dexOptions {
+        preDexLibraries true
+        javaMaxHeapSize "2g" // Use gig increments depending on needs
+        incremental true
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    // BEGIN Google APIs
+    // Play Services will validate the application prior to allowing OAuth2 access.
+    // The following lines implement maven imports as defined at:
+    // https://code.google.com/p/google-api-java-client/wiki/Setup
+    // Add the Google API client library.
+    compile('com.google.api-client:google-api-client:1.17.0-rc') {
+        // Exclude artifacts that the Android SDK/Runtime provides.
+        exclude(group: 'xpp3', module: 'xpp3')
+        exclude(group: 'junit', module: 'junit')
+        exclude(group: 'com.google.android', module: 'android')
+        exclude(group: 'com.google.android.google-play-services', module: 'google-play-services')
+        exclude(group: 'org.apache.httpcomponents', module: 'httpclient')
+    }
+    // END Google APIs
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
@@ -44,6 +62,19 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'com.google.android.gms:play-services-identity:8.4.0'
+    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.34'
+    compile 'com.google.http-client:google-http-client-android:1.12.0-beta'
+    compile 'com.google.apis:google-api-services-storage:v1-rev66-1.21.0'
+    compile 'commons-io:commons-io:2.4'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
 }
+
+
+
+
+
+
+
 
 apply plugin: 'com.google.gms.google-services'

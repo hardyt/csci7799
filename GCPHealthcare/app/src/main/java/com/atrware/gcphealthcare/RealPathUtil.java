@@ -1,4 +1,4 @@
-package com.google.devrel.samples.helloendpoints;
+package com.atrware.gcphealthcare;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
