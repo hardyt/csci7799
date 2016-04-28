@@ -94,12 +94,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -143,6 +145,9 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceivedReceiver;
     private boolean isMessageReceiverRegistered;
 
+    private BroadcastReceiver mFileOpsReceiver;
+    private boolean isFileOpsReceiverRegistered;
+
     // for google credentials
     private AuthorizationCheckTask mAuthTask;
     private String mEmailAccount = "";
@@ -163,7 +168,12 @@ public class MainActivity extends AppCompatActivity {
     private String SERVICE_ACCOUNT_EMAIL = "atrware@appspot.gserviceaccount.com";
     private String STORAGE_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write";
 
+    // for timing
+    private String realPath = "";
     private long timeDifference = 0;
+    private long uploadTime,notificationTime,downloadTime;
+    private int transactionCount = 0;
+    //private File transactionLog = new File("transactions.csv");
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -181,6 +191,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Get Google Account credentials
         //onClickSignIn(MainActivity.this.findViewById(id.email_address_tv));
+
+        /*
+        // Check if transaction log exists
+        if(!transactionLog.exists()) {
+            // If it doesn't exist, write the header line
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(transactionLog, true));
+                writer.write("Attempt,File,Upload Time,Notification Time,Download Time");
+                writer.newLine();
+                writer.close();
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Problem with transaction log: " + e);
+            }
+        }
+        */
 
         // Begin GCM code
         mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
@@ -212,17 +237,19 @@ public class MainActivity extends AppCompatActivity {
                 // End timer
                 timeDifference = System.currentTimeMillis() - timeDifference;
                 // Add the information to Firebase
+                /*
                 new Firebase(firebaseID)
                         .push()
                         .child("text")
                         .setValue("GCM: " + timeDifference + "ms");
+                */
+                notificationTime = timeDifference;
+                /*
                 new Firebase(firebaseID)
                         .push()
                         .child("text")
                         .setValue(intent.getExtras().getString("filename"));
-
-                SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(context);
+                */
 
                 // download the file
                 downloadFile(intent.getExtras().getString("filename"));
@@ -230,10 +257,25 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        Log.i(LOG_TAG, "Setting up file ops receiver.");
+        mFileOpsReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.i(LOG_TAG, "FileOps to use file: " +
+                        intent.getExtras().getString("realPath"));
+
+                // Start the file ops
+                uploadFile(intent.getExtras().getString("realPath"));
+            }
+        };
+
         // Registering BroadcastReceiver
         registerReceiver();
         // Registering MessageReceiver
         registerMessageReceiver();
+        // Registering FileOpsReciever
+        registerFileOpsReceiver();
+
 
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
@@ -308,6 +350,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // Delete items when clicked
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -315,7 +358,9 @@ public class MainActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 // Show file
-                String fileName = (String) listView.getItemAtPosition(position);
+                String itemText = (String) listView.getItemAtPosition(position);
+                String[] parts = itemText.split(",");
+                String fileName = parts[0];
                 String mimetype = URLConnection.guessContentTypeFromName(fileName);
                 if(mimetype != null){
                     // Show file
@@ -327,23 +372,23 @@ public class MainActivity extends AppCompatActivity {
                     target.setDataAndType(Uri.fromFile(file), mimetype);
                     target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(target);
-                } else {
-                    // remove object
-                    new Firebase(firebaseID)
-                            .orderByChild("text")
-                            .equalTo((String) listView.getItemAtPosition(position))
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.hasChildren()) {
-                                        DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
-                                        firstChild.getRef().removeValue();
-                                    }
-                                }
-
-                                public void onCancelled(FirebaseError firebaseError) {
-                                }
-                            });
                 }
+                // remove object
+                new Firebase(firebaseID)
+                        .orderByChild("text")
+                        .equalTo((String) listView.getItemAtPosition(position))
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.hasChildren()) {
+                                    DataSnapshot firstChild = dataSnapshot.getChildren().iterator().next();
+                                    firstChild.getRef().removeValue();
+                                }
+                            }
+
+                            public void onCancelled(FirebaseError firebaseError) {
+                            }
+                        });
+
 
             }
         });
@@ -379,11 +424,16 @@ public class MainActivity extends AppCompatActivity {
 
             case PICKFILE_RESULT_CODE:
                 if (resultCode == RESULT_OK) {
-                    String realPath = RealPathUtil.getPath(this, data.getData());
+                    realPath = RealPathUtil.getPath(this, data.getData());
 
                     //String FilePath = data.getData().getPath();
                     Log.i(LOG_TAG, "Path is: " + realPath);
-                    uploadFile(realPath);
+                    //uploadFile(realPath);
+
+                    Intent fileOps = new Intent(QuickstartPreferences.FILEOPS_REQUESTED);
+                    fileOps.putExtra("realPath", realPath);
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(fileOps);
+
                 }
                 break;
         }
@@ -424,6 +474,14 @@ public class MainActivity extends AppCompatActivity {
             LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceivedReceiver,
                     new IntentFilter(QuickstartPreferences.MESSAGE_RECEIVED));
             isMessageReceiverRegistered = true;
+        }
+    }
+
+    private void registerFileOpsReceiver() {
+        if (!isFileOpsReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mFileOpsReceiver,
+                    new IntentFilter(QuickstartPreferences.FILEOPS_REQUESTED));
+            isFileOpsReceiverRegistered = true;
         }
     }
     /**
@@ -615,12 +673,23 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(LOG_TAG, "GCS completed.");
                         // End timer
                         timeDifference = System.currentTimeMillis() - timeDifference;
+                        downloadTime = timeDifference;
                         // Add the information to Firebase
                         final EditText text = (EditText) findViewById(R.id.todoText);
                         new Firebase(firebaseID)
                                 .push()
                                 .child("text")
-                                .setValue("DL: " + timeDifference + "ms");
+                                .setValue(fileName + "," + transactionCount + "," + uploadTime + ","
+                                        + notificationTime + "," + downloadTime);
+                        if(transactionCount < 20) {
+                            Intent fileOps = new Intent(QuickstartPreferences.FILEOPS_REQUESTED);
+                            fileOps.putExtra("realPath", realPath);
+                            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(fileOps);
+                            transactionCount++;
+                        } else {
+                            transactionCount = 0;
+                        }
+
 
                         /*
                         // Show file - this doesn't work when fired by broadcast receiver
@@ -636,7 +705,6 @@ public class MainActivity extends AppCompatActivity {
                         target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(target);
                         */
-
                     }
                 }.execute();
             }
@@ -707,10 +775,13 @@ public class MainActivity extends AppCompatActivity {
                         timeDifference = System.currentTimeMillis() - timeDifference;
                         // Add the information to Firebase
                         final EditText text = (EditText) findViewById(R.id.todoText);
+                        /*
                         new Firebase(firebaseID)
                                 .push()
                                 .child("text")
                                 .setValue("UP: " + timeDifference + "ms");
+                        */
+                        uploadTime = timeDifference;
 
                         String strResponse = new String(response);
                         Log.i(LOG_TAG, "Success: " + strResponse);

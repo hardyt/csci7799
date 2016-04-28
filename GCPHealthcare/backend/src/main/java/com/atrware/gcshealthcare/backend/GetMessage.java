@@ -28,7 +28,7 @@ public class GetMessage {
     @ApiMethod(name = "sayHi")
     public GetEndpointObjectModel sayHi(@Named("name") String name) {
         GetEndpointObjectModel response = new GetEndpointObjectModel();
-        response.setData("Hi, " + name);
+        response.setData("Download " + name);
 
         //send gcm
         MessagingEndpoint messageSender = new MessagingEndpoint();

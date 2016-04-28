@@ -13,3 +13,13 @@ server gcm api key AIzaSyD6rHzF0MvHWiU47RLLbupQDEal4y3mUbM
 
 web client id 135142527388-dm9igq5hiat1i3908c811j97dbfsc6vc.apps.googleusercontent.com
 client secret fWL2Wqdp37q5Edlsvl66a3HN
+
+Oh, I see. I think we can send the hostname or a discriminator value as a parameter from the javascript client of the custom domain to set the multitenancy current namespace in GCE. Do you think is possible? If so, how can we set CORS in GCE? Is there any documentation? Thank you.
+
+https://code.google.com/p/googleappengine/issues/detail?id=9384
+
+https://cloud.google.com/solutions/mobile/firebase-app-engine-android-studio
+https://cloud.google.com/solutions/mobile/mobile-app-backend-services#firebase
+https://sweltering-inferno-1859.firebaseio.com/
+
+https://developers.google.com/analytics/devguides/collection/android/v4/start?configured=true
